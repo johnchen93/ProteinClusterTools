@@ -1,0 +1,31 @@
+# IPR001761 (~40k sequences)
+mmseqs easy-cluster data/IPR001761.fasta PBP_small_out/100 tmp --min-seq-id 1.0 -c 0.8 --cov-mode 0
+
+# running tests
+# all by all blast
+python pipeline.py -d PBP_small_out/ -p IPR001761 -fa PBP_small_out/100_rep_seq.fasta -A > PBP_small_out/mmseqs.log
+
+# esm embed
+python pipeline.py -d PBP_small_out/ -p IPR001761 -fa PBP_small_out/100_rep_seq.fasta -E > PBP_small_out/embed.log
+
+# run clustering on mmseq results (no filtering), should no longer need fasta file (should have cleaned)
+python pipeline.py -d PBP_small_out/ -p IPR001761 -MC -P -cluster_lines 10000000 -cluster_jobs 100 > PBP_small_out/mmseqs_cluster.log
+
+# UMAP 
+python pipeline.py -d PBP_small_out/ -p IPR001761 -U
+
+# kmeans, using 30 features after PCA
+# all clusters
+python pipeline.py -d PBP_small_out/ -p IPR001761 -KM -K 166 505 1403 3939 9094 -KF 30
+# all clusters, all features
+python pipeline.py -d PBP_small_out/ -p IPR001761 -KM -K 166 505 1403 3939 9094 -KF 0
+
+# hierarchical clustering, 30 features after PCA
+# build the linkage matrix
+python pipeline.py -d PBP_small_out/ -p IPR001761 -HC -KF 30
+# all features
+python pipeline.py -d PBP_small_out/ -p IPR001761 -HC -KF 0
+
+# flatten the dendrogram into clusters
+# all clusters
+python pipeline.py -d PBP_small_out/ -p IPR001761 -FHC -K 166 505 1403 3939 9094

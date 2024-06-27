@@ -1,0 +1,103 @@
+#                                                                         --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name                  accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#          ------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+tr|A5VJN3|A5VJN3_LIMRD         -          cluster_43           -           4.3e-184  603.8   0.8    5e-184  603.6   0.8   1.0   1   0   0   1   1   1   1 -
+tr|A0A0U5JQF3|A0A0U5JQF3_LIMRT -          cluster_43           -           5.7e-184  603.4   1.0  6.5e-184  603.2   1.0   1.0   1   0   0   1   1   1   1 -
+tr|F8KBU1|F8KBU1_LIMR5         -          cluster_43           -           6.1e-184  603.3   1.1  6.9e-184  603.1   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A1X8V8H7|A0A1X8V8H7_LIMRT -          cluster_43           -           6.5e-184  603.2   0.8  7.5e-184  603.0   0.8   1.0   1   0   0   1   1   1   1 -
+tr|A0A839GYF5|A0A839GYF5_9LACO -          cluster_43           -           7.3e-184  603.1   1.0  8.4e-184  602.9   1.0   1.0   1   0   0   1   1   1   1 -
+tr|F8DPT4|F8DPT4_LIMRS         -          cluster_43           -           7.5e-184  603.0   1.5  8.7e-184  602.8   1.5   1.0   1   0   0   1   1   1   1 -
+tr|S5NBH6|S5NBH6_LIMRT         -          cluster_43           -           8.7e-184  602.8   0.7    1e-183  602.6   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A0U5JXP8|A0A0U5JXP8_LIMRT -          cluster_43           -           9.3e-184  602.7   0.7  1.1e-183  602.5   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A6A8D7S1|A0A6A8D7S1_LIMRT -          cluster_43           -           9.5e-184  602.7   1.1  1.1e-183  602.5   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A7L6BIA4|A0A7L6BIA4_LIMRT -          cluster_43           -           1.1e-183  602.4   1.4  1.3e-183  602.2   1.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A0U5FGR2|A0A0U5FGR2_LIMRT -          cluster_43           -           1.2e-183  602.3   1.3  1.4e-183  602.1   1.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A1C2GF13|A0A1C2GF13_LIMRT -          cluster_43           -           1.4e-183  602.1   0.9  1.6e-183  601.9   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A921EA11|A0A921EA11_LIMRT -          cluster_43           -           1.5e-183  602.0   1.1  1.7e-183  601.9   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A0U5EXS6|A0A0U5EXS6_LIMRT -          cluster_43           -           1.5e-183  602.0   1.3  1.8e-183  601.8   1.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A7Y0SRP3|A0A7Y0SRP3_LIMRT -          cluster_43           -           1.7e-183  601.9   0.8  1.9e-183  601.7   0.8   1.0   1   0   0   1   1   1   1 -
+tr|A0A1V4FM98|A0A1V4FM98_LIMRT -          cluster_43           -           1.7e-183  601.8   0.7    2e-183  601.6   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A6A8DQH5|A0A6A8DQH5_LIMRT -          cluster_43           -           1.8e-183  601.8   0.9    2e-183  601.6   0.9   1.0   1   0   0   1   1   1   1 -
+tr|B3XQA4|B3XQA4_LIMR1         -          cluster_43           -           1.8e-183  601.8   1.2    2e-183  601.6   1.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A2S1EQT8|A0A2S1EQT8_LIMRT -          cluster_43           -           2.2e-183  601.5   0.9  2.5e-183  601.3   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A143PY27|A0A143PY27_LIMRT -          cluster_43           -           2.3e-183  601.4   1.1  2.6e-183  601.2   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A6H1NSS7|A0A6H1NSS7_LIMRT -          cluster_43           -           2.5e-183  601.3   1.4  2.9e-183  601.1   1.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A514XSD8|A0A514XSD8_LIMRT -          cluster_43           -           2.8e-183  601.1   1.0  3.2e-183  600.9   1.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A081NPP5|A0A081NPP5_LIMRT -          cluster_43           -             3e-183  601.0   1.0  3.4e-183  600.8   1.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A363EAW3|A0A363EAW3_LIMRT -          cluster_43           -           3.5e-183  600.8   1.2  4.1e-183  600.6   1.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A1S9ASU2|A0A1S9ASU2_LIMRT -          cluster_43           -           4.1e-183  600.6   1.1  4.7e-183  600.4   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W3UJU9|A0A7W3UJU9_9LACO -          cluster_43           -           5.9e-183  600.1   1.6  6.7e-183  599.9   1.6   1.0   1   0   0   1   1   1   1 -
+tr|A0A2T5Q4B7|A0A2T5Q4B7_LIMRT -          cluster_43           -           6.9e-183  599.9   0.9  7.9e-183  599.7   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A073JZ42|A0A073JZ42_LIMRT -          cluster_43           -           1.2e-182  599.1   0.9  1.3e-182  598.9   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W3YW88|A0A7W3YW88_9LACO -          cluster_43           -           1.2e-182  599.0   1.5  1.4e-182  598.8   1.5   1.0   1   0   0   1   1   1   1 -
+tr|A0A844BA06|A0A844BA06_LIMRT -          cluster_43           -           1.5e-182  598.8   1.1  1.7e-182  598.6   1.1   1.0   1   0   0   1   1   1   1 -
+tr|R9WI22|R9WI22_LIMRT         -          cluster_43           -             3e-182  597.8   0.7  3.4e-182  597.6   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A7X2G0D7|A0A7X2G0D7_LIMRT -          cluster_43           -           4.8e-182  597.1   0.9  5.5e-182  596.9   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A256VEI6|A0A256VEI6_LIMRT -          cluster_43           -           9.6e-181  592.8   1.3  1.1e-180  592.6   1.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A839GWQ5|A0A839GWQ5_9LACO -          cluster_43           -           1.6e-179  588.8   0.6  1.9e-179  588.6   0.6   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W3TTS9|A0A7W3TTS9_9LACO -          cluster_43           -           2.6e-179  588.1   0.6    3e-179  587.9   0.6   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W3YMZ1|A0A7W3YMZ1_9LACO -          cluster_43           -           6.4e-176  576.9   0.6  7.3e-176  576.8   0.6   1.0   1   0   0   1   1   1   1 -
+tr|A0A2J6NPP3|A0A2J6NPP3_9LACO -          cluster_43           -             1e-174  573.0   0.2  1.1e-174  572.8   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A0R1XE45|A0A0R1XE45_9LACO -          cluster_43           -           3.2e-173  568.1   0.1  3.7e-173  567.9   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A5P9QHY4|A0A5P9QHY4_9LACO -          cluster_43           -           4.3e-173  567.6   0.2    5e-173  567.4   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A7H9CSA4|A0A7H9CSA4_LIMMU -          cluster_43           -           4.3e-172  564.4   1.1  4.9e-172  564.2   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A1G9YWT9|A0A1G9YWT9_LIMMU -          cluster_43           -           7.5e-172  563.6   0.7  8.6e-172  563.4   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A7X9N5L5|A0A7X9N5L5_9LACO -          cluster_43           -             9e-172  563.3   0.9    1e-171  563.1   0.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A508YT93|A0A508YT93_LIMMU -          cluster_43           -           6.1e-171  560.6   1.1    7e-171  560.4   1.1   1.0   1   0   0   1   1   1   1 -
+tr|B2GCK3|B2GCK3_LIMF3         -          cluster_43           -           8.8e-171  560.1   0.0  9.8e-171  559.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0F4HCI9|A0A0F4HCI9_LIMFE -          cluster_43           -           1.2e-170  559.6   0.0  1.4e-170  559.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A806TU09|A0A806TU09_LIMFE -          cluster_43           -           2.8e-170  558.4   0.0  3.1e-170  558.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A2K2TGL5|A0A2K2TGL5_LIMFE -          cluster_43           -           5.1e-170  557.5   0.0  5.7e-170  557.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|C0WYB4|C0WYB4_LIMFE         -          cluster_43           -           6.9e-170  557.1   0.0  7.7e-170  557.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1L7GXM6|A0A1L7GXM6_LIMFE -          cluster_43           -             8e-170  556.9   0.0  8.9e-170  556.7   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A4Q0D2E5|A0A4Q0D2E5_LIMMU -          cluster_43           -           1.7e-169  555.9   0.7  1.9e-169  555.7   0.7   1.0   1   0   0   1   1   1   1 -
+tr|A0A158SLY7|A0A158SLY7_LIMFE -          cluster_43           -           6.1e-169  554.0   0.0  6.8e-169  553.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1D7ZUI1|A0A1D7ZUI1_LIMFE -          cluster_43           -           2.4e-168  552.0   0.0  2.7e-168  551.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1Q2T5B9|A0A1Q2T5B9_LIMFE -          cluster_43           -           5.8e-168  550.8   0.0  6.5e-168  550.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0D4CKK0|A0A0D4CKK0_LIMMU -          cluster_43           -           1.8e-167  549.1   0.7  2.1e-167  548.9   0.7   1.0   1   0   0   1   1   1   1 -
+tr|E3C6K1|E3C6K1_9LACO         -          cluster_43           -             2e-166  545.8   0.0  2.2e-166  545.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A4Z0JCZ3|A0A4Z0JCZ3_9LACO -          cluster_43           -           2.7e-162  532.2   4.4    3e-162  532.0   4.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A0R1U3S6|A0A0R1U3S6_9LACO -          cluster_43           -           3.2e-162  531.9   0.1  3.8e-162  531.7   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A7L5UGC4|A0A7L5UGC4_9LACO -          cluster_43           -           3.7e-162  531.7   0.1  4.2e-162  531.5   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A261FJH9|A0A261FJH9_9BIFI -          cluster_43           -           4.5e-162  531.4   0.1    5e-162  531.3   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A5M9ZM34|A0A5M9ZM34_9BIFI -          cluster_43           -           4.5e-162  531.4   0.1  5.1e-162  531.2   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A0R2GXB2|A0A0R2GXB2_9LACO -          cluster_43           -           1.2e-161  530.1   0.1  1.3e-161  529.9   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A430F9H5|A0A430F9H5_9BIFI -          cluster_43           -           1.3e-161  529.9   0.1  1.4e-161  529.8   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A229VYT9|A0A229VYT9_9BIFI -          cluster_43           -           1.4e-161  529.8   0.1  1.6e-161  529.7   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A0R1X7P9|A0A0R1X7P9_9LACO -          cluster_43           -           2.4e-160  525.8   0.0  2.9e-160  525.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|E0Q512|E0Q512_9BIFI         -          cluster_43           -           4.6e-158  518.3   0.0  5.1e-158  518.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|W2VBX4|W2VBX4_9BIFI         -          cluster_43           -           4.7e-158  518.2   0.0  5.3e-158  518.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|H4GI45|H4GI45_9LACO         -          cluster_43           -           5.9e-158  517.9   0.1  6.8e-158  517.7   0.1   1.0   1   0   0   1   1   1   1 -
+tr|D2Q5R3|D2Q5R3_BIFDB         -          cluster_43           -           7.3e-158  517.6   0.0  8.1e-158  517.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A6N9Z6F4|A0A6N9Z6F4_9BIFI -          cluster_43           -           1.3e-157  516.7   0.0  1.5e-157  516.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A430FVJ0|A0A430FVJ0_9BIFI -          cluster_43           -             4e-156  511.9   0.3  4.4e-156  511.7   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A261G836|A0A261G836_9BIFI -          cluster_43           -           7.4e-155  507.7   0.1  8.2e-155  507.6   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A6L9TDA5|A0A6L9TDA5_9BIFI -          cluster_43           -           1.6e-154  506.6   0.1  1.8e-154  506.4   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A366KAI5|A0A366KAI5_9BIFI -          cluster_43           -           1.9e-154  506.3   0.0  2.2e-154  506.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|G9ZLZ0|G9ZLZ0_9LACO         -          cluster_43           -           7.4e-154  504.4   2.9  8.2e-154  504.3   2.9   1.0   1   0   0   1   1   1   1 -
+tr|A0A5R9CTT2|A0A5R9CTT2_9LACO -          cluster_43           -           9.7e-154  504.0   3.8  1.1e-153  503.9   3.8   1.0   1   0   0   1   1   1   1 -
+tr|A0A512PQS2|A0A512PQS2_9LACO -          cluster_43           -           3.8e-152  498.8   0.5  4.3e-152  498.6   0.5   1.0   1   0   0   1   1   1   1 -
+tr|A0A806J0D3|A0A806J0D3_LIMFE -          cluster_43           -           7.7e-152  497.8   0.0  8.6e-152  497.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A8E1X5Q6|A0A8E1X5Q6_LENBU -          cluster_43           -             6e-150  491.6   1.2  6.8e-150  491.4   1.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A378HJI2|A0A378HJI2_LEVBR -          cluster_43           -           2.1e-148  486.5   0.3  2.4e-148  486.3   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A1W6NDU6|A0A1W6NDU6_LEVBR -          cluster_43           -           2.5e-148  486.2   0.3  2.8e-148  486.1   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A1W6NC62|A0A1W6NC62_LEVBR -          cluster_43           -           2.8e-148  486.1   0.2  3.1e-148  485.9   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A0C1Q4X5|A0A0C1Q4X5_LEVBR -          cluster_43           -           4.5e-148  485.4   0.3    5e-148  485.3   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A2Z3R5Q2|A0A2Z3R5Q2_LEVBR -          cluster_43           -           9.7e-148  484.3   0.2  1.1e-147  484.1   0.2   1.0   1   0   0   1   1   1   1 -
+tr|U2P544|U2P544_LEVBR         -          cluster_43           -           1.1e-147  484.2   0.3  1.2e-147  484.0   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A5B7XX49|A0A5B7XX49_LEVBR -          cluster_43           -           1.1e-147  484.1   0.2  1.2e-147  484.0   0.2   1.0   1   0   0   1   1   1   1 -
+tr|X0QQW7|X0QQW7_9LACO         -          cluster_43           -           1.4e-147  483.8   5.3  1.6e-147  483.6   5.3   1.0   1   0   0   1   1   1   1 -
+tr|Q03U42|Q03U42_LEVBA         -          cluster_43           -           1.9e-147  483.4   0.3  2.1e-147  483.2   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A483BPZ6|A0A483BPZ6_OENOE -          cluster_43           -           1.3e-143  470.7   0.8  1.5e-143  470.6   0.8   1.0   1   0   0   1   1   1   1 -
+tr|G9WHU4|G9WHU4_9LACO         -          cluster_43           -           7.5e-126  412.4   0.4  8.3e-126  412.2   0.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A939C6S5|A0A939C6S5_LIMMU -          cluster_43           -           4.9e-108  353.8   1.8  5.6e-108  353.6   1.8   1.0   1   0   0   1   1   1   1 -
+#
+# Program:         hmmsearch
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      /tmp/tmpckg1ga46/cluster_43.hmm
+# Target file:     /tmp/tmpckg1ga46/cluster_43.fa
+# Option settings: hmmsearch --tblout /tmp/tmpckg1ga46/cluster_43.hits /tmp/tmpckg1ga46/cluster_43.hmm /tmp/tmpckg1ga46/cluster_43.fa 
+# Current dir:     /home/john/Documents/clustertools_dev/analyses
+# Date:            Thu Jun 27 19:18:27 2024
+# [ok]

@@ -1,0 +1,95 @@
+#                                                                         --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name                  accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#          ------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+tr|Q2S744|Q2S744_HAHCH         -          cluster_53           -           1.5e-160  526.1   0.0  1.8e-160  525.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8QBB7|A0A7W8QBB7_PARAM -          cluster_53           -             2e-160  525.7   0.0  2.4e-160  525.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8RK44|A0A7W8RK44_9BURK -          cluster_53           -             2e-160  525.7   0.0  2.4e-160  525.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8T0B3|A0A7W8T0B3_9BURK -          cluster_53           -             2e-160  525.7   0.0  2.4e-160  525.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8SLR3|A0A7W8SLR3_9BURK -          cluster_53           -           2.1e-160  525.6   0.0  2.6e-160  525.3   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1I9YUU4|A0A1I9YUU4_9BURK -          cluster_53           -           2.1e-160  525.6   0.0  2.6e-160  525.3   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A3T0VVK0|A0A3T0VVK0_9GAMM -          cluster_53           -           2.2e-160  525.5   0.0  2.7e-160  525.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8L8N8|A0A7W8L8N8_9BURK -          cluster_53           -           2.7e-160  525.2   0.0  3.4e-160  524.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7Y6K632|A0A7Y6K632_9BURK -          cluster_53           -           2.7e-160  525.2   0.0  3.4e-160  524.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8S1S5|A0A7W8S1S5_9BURK -          cluster_53           -           2.8e-160  525.2   0.0  3.5e-160  524.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|D5WLQ7|D5WLQ7_PARAM         -          cluster_53           -           3.7e-160  524.8   0.0  4.5e-160  524.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A941I1G5|A0A941I1G5_9BURK -          cluster_53           -           8.5e-160  523.6   0.0    1e-159  523.3   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1H1K9D4|A0A1H1K9D4_9BURK -          cluster_53           -             1e-159  523.3   0.0  1.2e-159  523.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W8USF7|A0A7W8USF7_9BURK -          cluster_53           -           2.2e-159  522.3   0.0  2.6e-159  522.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A6L8L2J0|A0A6L8L2J0_9BURK -          cluster_53           -           2.5e-159  522.1   0.0  2.7e-159  521.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1Q8IM08|A0A1Q8IM08_9BURK -          cluster_53           -           3.7e-159  521.5   0.0  4.4e-159  521.3   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0Q6S772|A0A0Q6S772_9BURK -          cluster_53           -           7.1e-159  520.6   0.0  7.8e-159  520.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1G6RLE7|A0A1G6RLE7_9BURK -          cluster_53           -           1.1e-158  519.9   0.0  1.3e-158  519.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A098U7A4|A0A098U7A4_9BURK -          cluster_53           -           1.3e-158  519.7   0.0  1.4e-158  519.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A149PG60|A0A149PG60_9BURK -          cluster_53           -           3.1e-158  518.5   0.0  3.8e-158  518.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7X3G4C9|A0A7X3G4C9_9BURK -          cluster_53           -           5.1e-158  517.8   0.0  5.7e-158  517.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W5EDR5|A0A7W5EDR5_9BURK -          cluster_53           -           7.5e-158  517.2   0.0  8.2e-158  517.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A6I3XK60|A0A6I3XK60_9BURK -          cluster_53           -           1.5e-157  516.2   0.0  1.8e-157  516.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A4Y9SE96|A0A4Y9SE96_9BURK -          cluster_53           -           2.7e-157  515.4   0.1    3e-157  515.3   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A4P6L5Y5|A0A4P6L5Y5_9BURK -          cluster_53           -           2.8e-157  515.3   0.0  3.4e-157  515.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A9E3N723|A0A9E3N723_9BURK -          cluster_53           -           3.5e-157  515.0   0.0    4e-157  514.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A411X809|A0A411X809_9BURK -          cluster_53           -           6.7e-157  514.1   0.0    8e-157  513.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1H1JKS2|A0A1H1JKS2_9BURK -          cluster_53           -           7.2e-157  514.0   0.0  7.9e-157  513.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A4V2ZVY4|A0A4V2ZVY4_9BURK -          cluster_53           -           8.1e-157  513.8   0.0  9.9e-157  513.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A2U1AIY7|A0A2U1AIY7_9BURK -          cluster_53           -           1.3e-156  513.2   0.0  1.5e-156  512.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A562PS75|A0A562PS75_9BURK -          cluster_53           -           6.4e-156  510.9   0.0  7.1e-156  510.7   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A840MFM2|A0A840MFM2_9PROT -          cluster_53           -           6.5e-156  510.9   0.1  7.1e-156  510.7   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A937DDG4|A0A937DDG4_9BURK -          cluster_53           -             8e-156  510.6   0.0  8.9e-156  510.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1H4GSL5|A0A1H4GSL5_9BURK -          cluster_53           -           1.1e-155  510.1   0.0  1.4e-155  509.8   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A6I3T1V0|A0A6I3T1V0_9BURK -          cluster_53           -           1.4e-155  509.7   0.0  1.6e-155  509.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A936UJR6|A0A936UJR6_9RHOO -          cluster_53           -           1.7e-155  509.5   0.0  1.9e-155  509.3   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A925S507|A0A925S507_9BURK -          cluster_53           -           3.8e-155  508.3   0.0  4.3e-155  508.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A3E0WUW3|A0A3E0WUW3_9GAMM -          cluster_53           -           4.3e-155  508.1   0.2  4.8e-155  508.0   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W2EQR2|A0A7W2EQR2_9BURK -          cluster_53           -           6.4e-155  507.6   0.0  7.1e-155  507.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A7W2FDD8|A0A7W2FDD8_9BURK -          cluster_53           -           6.5e-155  507.6   0.0  7.2e-155  507.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A809PGM1|A0A809PGM1_9BURK -          cluster_53           -           7.9e-155  507.3   0.0  8.8e-155  507.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A6N9HGQ7|A0A6N9HGQ7_9BURK -          cluster_53           -           6.6e-154  504.2   0.0  7.4e-154  504.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0G3BKG4|A0A0G3BKG4_9BURK -          cluster_53           -           6.9e-154  504.2   0.0  8.2e-154  503.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A2J5PGR2|A0A2J5PGR2_9ENTR -          cluster_53           -           7.9e-153  500.7   0.2  9.5e-153  500.4   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A9Q3M6H0|A0A9Q3M6H0_9ENTR -          cluster_53           -             8e-153  500.7   0.2  9.6e-153  500.4   0.2   1.0   1   0   0   1   1   1   1 -
+tr|B5RK48|B5RK48_KLEP3         -          cluster_53           -           1.1e-152  500.3   0.2  1.3e-152  500.0   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A6L7EC36|A0A6L7EC36_9ENTR -          cluster_53           -           1.4e-152  499.8   0.3  1.8e-152  499.5   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A7S8WA52|A0A7S8WA52_RAOTE -          cluster_53           -           1.6e-152  499.7   0.2    2e-152  499.4   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A087IJD6|A0A087IJD6_VIBVL -          cluster_53           -           5.3e-152  498.0   0.4    6e-152  497.8   0.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A2S3SBR7|A0A2S3SBR7_VIBVL -          cluster_53           -           7.7e-152  497.5   0.4  8.6e-152  497.3   0.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A8H9N1H2|A0A8H9N1H2_VIBVL -          cluster_53           -           1.6e-151  496.4   0.4  1.8e-151  496.2   0.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A0N0XKN8|A0A0N0XKN8_9NEIS -          cluster_53           -           1.1e-150  493.7   0.8  1.3e-150  493.4   0.8   1.0   1   0   0   1   1   1   1 -
+tr|A0A840RAX0|A0A840RAX0_9NEIS -          cluster_53           -           9.5e-149  487.3   0.0  1.1e-148  487.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A515EQ42|A0A515EQ42_9BURK -          cluster_53           -           1.8e-146  479.8   0.0  2.2e-146  479.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A3N7C0M5|A0A3N7C0M5_9BURK -          cluster_53           -           1.8e-146  479.8   0.0  2.1e-146  479.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A370K249|A0A370K249_9DEIN -          cluster_53           -           3.4e-146  478.9   0.0  3.8e-146  478.7   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1H5VCP2|A0A1H5VCP2_9VIBR -          cluster_53           -           4.9e-146  478.4   0.1  5.5e-146  478.2   0.1   1.0   1   0   0   1   1   1   1 -
+tr|R9PQZ5|R9PQZ5_AGAAL         -          cluster_53           -           6.4e-146  478.0   0.1  7.1e-146  477.8   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A7C9G5D8|A0A7C9G5D8_9ALTE -          cluster_53           -           7.9e-146  477.7   0.1  9.6e-146  477.4   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A2S3R8S8|A0A2S3R8S8_VIBVL -          cluster_53           -           4.3e-145  475.3   1.1  5.2e-145  475.0   1.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A2H0J2A4|A0A2H0J2A4_9BURK -          cluster_53           -           5.3e-145  475.0   0.0  6.5e-145  474.7   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A976EGM6|A0A976EGM6_9PROT -          cluster_53           -           2.8e-143  469.3   0.0  3.4e-143  469.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A5Q0TIF8|A0A5Q0TIF8_9VIBR -          cluster_53           -           3.4e-143  469.1   0.4  3.7e-143  468.9   0.4   1.0   1   0   0   1   1   1   1 -
+tr|A0A557NX26|A0A557NX26_9VIBR -          cluster_53           -           3.6e-143  469.0   0.2    4e-143  468.8   0.2   1.0   1   0   0   1   1   1   1 -
+tr|A0A368LNQ3|A0A368LNQ3_9VIBR -          cluster_53           -           8.1e-143  467.8   0.3  9.1e-143  467.6   0.3   1.0   1   0   0   1   1   1   1 -
+tr|A0A511MWT2|A0A511MWT2_DEIC1 -          cluster_53           -           3.7e-142  465.6   0.0  4.2e-142  465.4   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A5C6Z929|A0A5C6Z929_9BURK -          cluster_53           -           1.3e-141  463.8   0.0  1.6e-141  463.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1I6JN92|A0A1I6JN92_9BURK -          cluster_53           -             2e-141  463.2   0.0  2.4e-141  462.9   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0W8JDI2|A0A0W8JDI2_9VIBR -          cluster_53           -             4e-141  462.2   0.0  4.5e-141  462.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A099LU21|A0A099LU21_9VIBR -          cluster_53           -           7.1e-141  461.4   0.0    8e-141  461.2   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0F2IR52|A0A0F2IR52_9VIBR -          cluster_53           -           2.4e-140  459.7   0.0  2.7e-140  459.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A957I759|A0A957I759_9CHLR -          cluster_53           -           1.9e-139  456.7   0.0  2.1e-139  456.6   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A511MZE6|A0A511MZE6_DEIC1 -          cluster_53           -           9.6e-139  454.4   0.0  1.1e-138  454.1   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A0C3IBV5|A0A0C3IBV5_9VIBR -          cluster_53           -           3.7e-137  449.2   0.0  4.1e-137  449.0   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A1I6J2J7|A0A1I6J2J7_9BURK -          cluster_53           -           1.1e-136  447.6   0.1  1.3e-136  447.4   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A5C6Z5M4|A0A5C6Z5M4_9BURK -          cluster_53           -           1.7e-136  447.0   0.1  1.9e-136  446.9   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A3M1JFQ0|A0A3M1JFQ0_UNCCH -          cluster_53           -           1.6e-120  394.5   0.1  1.8e-120  394.3   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A485BFK2|A0A485BFK2_RAOTE -          cluster_53           -           1.7e-120  394.4   0.1  1.9e-120  394.2   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A4U9CYW2|A0A4U9CYW2_RAOTE -          cluster_53           -           3.7e-118  386.7   0.1  4.1e-118  386.6   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A957LCS0|A0A957LCS0_9CHLR -          cluster_53           -            2.6e-99  324.7   0.1   2.9e-99  324.6   0.1   1.0   1   0   0   1   1   1   1 -
+tr|A0A257H288|A0A257H288_9BURK -          cluster_53           -            1.4e-92  302.6   0.0   1.5e-92  302.5   0.0   1.0   1   0   0   1   1   1   1 -
+tr|A0A957L1S8|A0A957L1S8_9CHLR -          cluster_53           -            6.1e-90  294.0   0.0   6.7e-90  293.8   0.0   1.0   1   0   0   1   1   1   1 -
+#
+# Program:         hmmsearch
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      /tmp/tmpubklw_7p/cluster_53.hmm
+# Target file:     /tmp/tmpubklw_7p/cluster_53.fa
+# Option settings: hmmsearch --tblout /tmp/tmpubklw_7p/cluster_53.hits /tmp/tmpubklw_7p/cluster_53.hmm /tmp/tmpubklw_7p/cluster_53.fa 
+# Current dir:     /home/john/Documents/clustertools_dev/analyses
+# Date:            Thu Jun 27 19:18:27 2024
+# [ok]
