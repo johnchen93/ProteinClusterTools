@@ -1,0 +1,15 @@
+pandas
+matplotlib
+biopython
+seaborn
+scikit-learn
+scipy
+fastcluster
+pybox2d
+tqdm
+pyyaml
+ipykernel
+bokeh
+umap-learn
+fair-esm
+proteinclustertools

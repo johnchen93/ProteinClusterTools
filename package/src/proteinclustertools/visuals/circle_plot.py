@@ -3,17 +3,38 @@ from bokeh.plotting import figure, show, output_notebook
 from bokeh.models import WheelZoomTool, BoxZoomTool, HoverTool, ColumnDataSource, CustomJS, LegendItem, Legend, ColorBar, LinearColorMapper
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
+from ..layout.circle_collision import Circle
 from collections import defaultdict
 import re
+
+
+def CoordinatesToCircles(xs, ys, ids):
+    '''
+    Convert a list of x and y coordinates to a list of Circle objects.
+
+    Arguments:
+    xs: list
+        list of x coordinates
+    ys: list
+        list of y coordinates
+    ids: list
+        list of ids
+
+    Returns:
+    circles: list
+        list of Circle objects
+    '''
+    return [Circle(x,y,1,id) for x,y,id in zip(xs,ys,ids)]
 
 rgba_re=re.compile(r'rgba\((\d+),(\d+),(\d+),(\d+)\)')
 output_notebook()
 black='rgba(0,0,0,255)'
 def CirclePlot(layout, 
                size=800,
-               annot_text:list=None, annot_top_n:int=None, annot_na=True,# annotation related
+               annot_text:list=None, annot_top_n:int=None, annot_na=True, singleton_annot_text=False, # annotation related
                annot_colors=None, base_fill=None, # face color related
-               outlines=None, base_line='rgba(0,0,0,255)', base_line_width=1, highlight_line_width=1 # outline related
+               outlines=None, base_line='rgba(0,0,0,255)', base_line_width=1, highlight_line_width=1, # outline related
+               fixed_point_size=None # if set, overrides individual radii
                ):
     '''
     Make a hierarchical circle plot using bokeh. Adds colors and annotations to the circles.
@@ -29,6 +50,8 @@ def CirclePlot(layout,
         number of highest proportion entries to show in the text annotations
     annot_na: bool
         whether to show NA values in the text annotations
+    singleton_annot_text: bool
+        assumes data is singletons, to allow faster mapping of annotations to data points
     annot_colors: dict
         dictionary of annotation colors, generated with ColorAnnot
     base_fill: str
@@ -41,6 +64,8 @@ def CirclePlot(layout,
         default outline width for the circles if there are no annotations
     highlight_line_width: int
         width of the outline for highlighted circles
+    fixed_point_size: int
+        if set, overrides individual radii
 
     Returns:
     p: bokeh.plotting.figure
@@ -69,7 +94,6 @@ def CirclePlot(layout,
         y=[c.y for c in layout[tgt_level].values()]
         r=[c.r for c in layout[tgt_level].values()]
         colors=[annot_colors[tgt_level][c.id] if tgt_level in annot_colors and c.id in annot_colors[tgt_level] else base_fill for c in layout[tgt_level].values()] if annot_colors is not None else [base_fill]*len(x)
-        # line_colors=[outlines['color'] if tgt_level in outlines and c.id in outlines[tgt_level] else base_line for c in layout[tgt_level].values()] if outlines is not None else [base_line]*len(x)
         line_colors=[outlines[tgt_level][c.id] if tgt_level in outlines and c.id in outlines[tgt_level] else base_line for c in layout[tgt_level].values()] if outlines is not None else [base_line]*len(x)
         line_widths=[highlight_line_width if tgt_level in outlines and c.id in outlines[tgt_level] else base_line_width for c in layout[tgt_level].values()] if outlines is not None else [base_line_width]*len(x)
 
@@ -87,19 +111,26 @@ def CirclePlot(layout,
                 if annot_tooltip not in annot_hover:
                     annot_hover.append(annot_tooltip)
                 if tgt_level in annot:
-                    hover_text=MakeHoverText(annot, tgt_level, draw_dict['name'], top_n=annot_top_n, 
+                    if singleton_annot_text:
+                        level_annot_dict=annot[tgt_level].set_index('id')['value'].to_dict()
+                        hover_text=[level_annot_dict[c.id] if c.id in level_annot_dict else None for c in layout[tgt_level].values()]
+                    else:
+                        hover_text=MakeHoverText(annot, tgt_level, draw_dict['name'], top_n=annot_top_n, 
                                              blank_fill=None, cluster_sizes=draw_dict['size'], annot_na=annot_na)
                 else:
                     hover_text=[None]*len(x)
                 draw_dict[annot_key]=hover_text
 
         circles=ColumnDataSource(data=draw_dict)
-        renderers[tgt_level]=p.circle('x', 'y', radius='r', fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
+        if fixed_point_size is None:
+            renderers[tgt_level]=p.circle('x', 'y', radius='r', fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
+        else:
+            renderers[tgt_level]=p.scatter('x', 'y', size=fixed_point_size, fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
 
         # save data for manual plotting
         manual_plot_data['x'].extend(x)
         manual_plot_data['y'].extend(y)
-        manual_plot_data['r'].extend(r)
+        manual_plot_data['r'].extend(r if fixed_point_size is None else [fixed_point_size]*len(x))
         c_conv=[]
         lc_conv=[]
         for i in range(len(x)):
@@ -118,12 +149,12 @@ def CirclePlot(layout,
         manual_plot_data['level'].extend([tgt_level]*len(x))
     
     # Define tooltips
+    no_size=all([v is None for v in draw_dict['size']])
     tooltips = [
         ("Level", "@level"),
         ("Cluster", "@name"),
-        ("Size", "@size"),
         # ("(x,y)", "($x, $y)"),
-    ] + annot_hover
+    ] + ([("Size", "@size")] if not no_size else []) + annot_hover
 
     hover=HoverTool(tooltips=tooltips, renderers=list(renderers.values())[-1:])
     p.add_tools(hover)
@@ -234,7 +265,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from ..layout.circle_collision import GetLimits
 
-def ExportFigure(layout, plot_data, size=5, legend_padding=1):
+def ExportFigure(layout, plot_data, size=5, legend_padding=1, as_scatter=False, fixed_point_size=None):
     '''
     Export a plot from bokeh by replicating the same plot in matplotlib.
 
@@ -247,6 +278,10 @@ def ExportFigure(layout, plot_data, size=5, legend_padding=1):
         Height of the plot in inches. Extra width will be added for legends
     legend_padding: int
         Factor for extra space added for each legend. Default figure is 3, and each legend is 1.
+    as_scatter: bool
+        If True, plot as scatter plot instead of circles (much faster with a lot more points). Circle plots cannot use scatter, as the radii do not scale properly.
+    fixed_point_size: int
+        If set, overrides individual radii. Use for setting a specific size for scatters with uniform size.
 
     Returns:
     f: matplotlib.figure.Figure
@@ -266,10 +301,14 @@ def ExportFigure(layout, plot_data, size=5, legend_padding=1):
     ax.set_ylim(ymin, ymax)
     ax.set_aspect('equal', adjustable='box')
     # remove padding on margins
-    for i in range(len(plot_data['x'])):
-        circle=plt.Circle((plot_data['x'][i], plot_data['y'][i]), plot_data['r'][i], 
-                          facecolor=plot_data['colors'][i], edgecolor=plot_data['line_colors'][i], lw=plot_data['line_widths'][i])
-        ax.add_patch(circle)
+    if as_scatter:
+        sizes=plot_data['r'] if fixed_point_size is None else fixed_point_size
+        ax.scatter(plot_data['x'], plot_data['y'], s=sizes, c=plot_data['colors'], edgecolors=plot_data['line_colors'], linewidths=plot_data['line_widths'])
+    else:
+        for i in range(len(plot_data['x'])):
+            circle=plt.Circle((plot_data['x'][i], plot_data['y'][i]), plot_data['r'][i], 
+                            facecolor=plot_data['colors'][i], edgecolor=plot_data['line_colors'][i], lw=plot_data['line_widths'][i])
+            ax.add_patch(circle)
 
     legend_count=1
     for key in ['fill_legend', 'line_legend']:

@@ -134,7 +134,7 @@ def FormatColor(color, format='bokeh', scale=255):
 
 
 def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_colors_seed=None, 
-                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh'):
+                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False):
     '''
     Colors a set of annotations made with AnnotateClusters.
 
@@ -218,6 +218,10 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
             data['color']=data['value'].map(c_mapping)
             # blend the colors by weight
             blended={}
+            if direct_map_colors:
+                data.dropna(subset=['color'], inplace=True)
+                colors[level]=dict(zip(data['id'], data['color'].apply(lambda x: FormatColor(x, color_format))))
+                continue
             for group, subdata in data.groupby('id'):
                 r,g,b=0,0,0
                 total=subdata['count'].sum() if not binary_blend else len(subdata)
