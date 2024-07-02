@@ -1,5 +1,9 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "protssn"
+name = "ProteinClusterTools"
 version = "0.0.1"
 authors = [
   { name="John Chen", email="jo.chn.93@gmail.com" },

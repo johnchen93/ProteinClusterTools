@@ -1,0 +1,22 @@
+DATASET_BINARY
+SEPARATOR COMMA
+DATASET_LABEL,Leaf Reviewed
+COLOR,#ff0000
+FIELD_SHAPES,2
+FIELD_LABELS,Leaf Reviewed
+#=================================================================#
+DATA
+19,1
+11339,1
+11338,1
+23,1
+11340,1
+20,1
+23872,1
+11337,1
+11336,1
+23887,1
+18,1
+0,1
+21,1
+22,1

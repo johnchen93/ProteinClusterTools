@@ -1,0 +1,21 @@
+DATASET_BINARY
+SEPARATOR COMMA
+DATASET_LABEL,Reviewed
+COLOR,#ff0000
+FIELD_SHAPES,2
+FIELD_LABELS,Reviewed
+#=================================================================#
+DATA
+node_28402,1
+node_18286,1
+node_15546,1
+node_11587,1
+node_8640,1
+node_7957,1
+node_6633,1
+node_26156,1
+node_5532,1
+node_25854,1
+node_25732,1
+node_930,1
+node_24662,1
