@@ -11,7 +11,7 @@ The work flow broadly follows 3 steps:
 2. Once the cluster definitions are made, create interactive visualizations of the sequence space, with user defined annotations. The main methods featured in this pipeline are:  
     
     a. A hierarchical cluster plot that captures cluster separations broadly at different levels of clustering. Works for all methods of clustering in 1). See the [hierarchical cluster plot](/analyses/hierarchical_cluster_plot.ipynb) notebook.  
-    b. A tree structure that shows detailed pairwise separations for all sequences (from indivual sequences to fully clustered). This is specifically for the vector representation based hierarchical clustering. See the [tree structure](/analyses/tree_structure.ipynb) notebook.
+    b. A tree structure that shows detailed pairwise separations for all sequences (from indivual sequences to fully clustered). This is specifically for the vector representation based hierarchical clustering. See the [tree structure](/analyses/tree_structure.ipynb) notebook.  
     c. Plotting the vector representation of each sequence individually after a UMAP dimensionality reduction. See the [UMAP plot](/analyses/UMAP_plot.ipynb) notebook.
 3. When the user has explored sequence space, they can select desired representative sequences from target clusters using either an HMM or vector based approach. See [representative selection](/analyses/representative_selection.ipynb), or end of [tree structure](/analyses/tree_structure.ipynb) in the case of dealing with targetting any node in a tree structure.
         
@@ -42,7 +42,7 @@ conda activate proteinclustertools
 The pipeline makes use of various software. The benefit of installing using conda is that the virtual environment can also handle non-Python software, helping avoid version conflicts (such as for CUDA). In other cases, installing with can be easier with conda (same 'install' command), and avoids needing different details for each separate tool.
 
 ### Python dependencies
-For most Python packages, if the user does not wish to use conda, they can instead use pip. Copy the following into a text file and use it to install using pip (it is assumed python is already installed in the environment).
+For most Python packages, if the user does not wish to use conda, they can instead use pip. The following packages are listed in the 'req.txt' file that can be used with pip.
 ```
 pandas
 matplotlib
@@ -60,7 +60,7 @@ umap-learn
 fair-esm
 proteinclustertools
 ```
-If the above was in a 'req.txt' file. Then the following can be used to install.
+The following command can then be used to install.
 ```
 pip install -r req.txt
 ```
