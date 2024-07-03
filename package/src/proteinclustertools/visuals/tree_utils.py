@@ -12,8 +12,8 @@ def DivideTree(treefile, clusterfile):
     and all the different subtrees that are children of the main tree.
 
     Args:
-    treefile (str): path to tree file
-    clusters (str): path to cluster file
+    - treefile (str): path to tree file
+    - clusters (str): path to cluster file
     '''
 
     # read in tree
@@ -48,8 +48,8 @@ def PruneTree(tree, target_clades):
     Prune the tree by removing branches and making internal nodes as leaves.
 
     Parameters:
-    tree (Phylo.BaseTree.Tree): The tree to prune.
-    target_clades (list of str): List of internal clade names to retain
+    - tree (Phylo.BaseTree.Tree): The tree to prune.
+    - target_clades (list of str): List of internal clade names to retain
     """
     # get depths 
     depths = tree.depths()
@@ -80,6 +80,17 @@ def ITOLMultiCategoryHeader(dataset_label, field_colors, field_labels, datatype=
     return header
 
 def ITOLProportionDataset(annot_table, color_annot, other_color='#bdbdbd', datatype='multibar', percentage=False, outdir=''):
+    '''
+    Make a dataset file for ITOL to display proportions of categorical data.
+
+    Args:
+    - annot_table (pd.DataFrame): table with columns 'id', 'value', 'count'. Can be obtained from 'AnnotateClusters' function (select a level by key).
+    - color_annot (dict): dictionary with keys 'categories', 'value', 'method'. Can be obtained from 'ColorAnnot' function.
+    - other_color (str): color to use for the 'Other' category. Aggregates all data not in the color_annot
+    - datatype (str): type of dataset to make. Either 'multibar' or 'piechart'
+    - percentage (bool): whether to display the data as percentage
+    - outdir (str): directory to save the file
+    '''
     if datatype not in ['multibar', 'piechart']:
         raise ValueError(f"datatype must be either 'multibar' or 'piechart', not {datatype}")
     
@@ -114,10 +125,12 @@ def ITOLColoredRangesDataset(dataset_label, branch_values, color_dict, outdir=''
     Make a colored branches dataset file for ITOL
 
     Args:
-    dataset_label (str): label for the dataset
-    branch_values (dict): dictionary with branch id as key and value as value
-    color_dict (dict): dictionary with value as key and color as value
-    outdir (str): directory to save the file
+    - dataset_label (str): label for the dataset
+    - branch_values (dict): dictionary with branch id as key and value as value
+    - color_dict (dict): dictionary with value as key and color as value. Obtained from 'ColorAnnot' function (key='categories')
+    - outdir (str): directory to save the file
+    - color_other (bool): whether to color branches not in the color_dict as 'Other'
+    - other_color (str): color to use for the 'Other' category. Aggregates all data not in the color_annot
     '''
     legend_dict={value: color for value, color in color_dict.items()}
     if color_other:
@@ -150,18 +163,18 @@ def ITOLBinaryDataset(dataset_label, leaf_ids, shape=2, color='#ff0000', outdir=
     Make a binary dataset file for ITOL
 
     Args:
-    dataset_label (str): label for the dataset
-    leaf_ids (list of str): list of leaf ids in the tree to highlight
-    shape (int): shape to show in ITOL, 
-                    #1: square
-                    #2: circle
-                    #3: star
-                    #4: right pointing triangle
-                    #5: left pointing triangle
-                    #6: checkmark
-    color (str): color of the markers
-    outdir (str): directory to save the file
-
+    - dataset_label (str): label for the dataset
+    - leaf_ids (list of str): list of leaf ids in the tree to highlight
+    - shape (int): shape to show in ITOL, 
+        -    #1: square
+        -    #2: circle
+        -    #3: star
+        -    #4: right pointing triangle
+        -    #5: left pointing triangle
+        -    #6: checkmark
+    - color (str): color of the markers
+    - outdir (str): directory to save the file
+    - internal (bool): whether to make an internal node dataset
     '''
     datatype='binary' if not internal else 'symbol'
     outlabel='leaf' if not internal else 'internal'
@@ -193,9 +206,9 @@ def ITOLLabelDataset(dataset_label, label_dict, outdir):
     Make a label dataset file for ITOL
 
     Args:
-    dataset_label (str): label for the dataset
-    label_dict (dict): dictionary with id as key and label as value
-    outdir (str): directory to save the file
+    - dataset_label (str): label for the dataset
+    - label_dict (dict): dictionary with id as key and label as value
+    - outdir (str): directory to save the file
     '''
     with open(os.path.join(outdir, f"{dataset_label}_label_dataset.txt"), "w") as file:
         header = (

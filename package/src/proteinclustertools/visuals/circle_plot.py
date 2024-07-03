@@ -13,15 +13,15 @@ def CoordinatesToCircles(xs, ys, ids):
     Convert a list of x and y coordinates to a list of Circle objects.
 
     Arguments:
-    xs: list
+    - xs: list
         list of x coordinates
-    ys: list
+    - ys: list
         list of y coordinates
-    ids: list
+    - ids: list
         list of ids
 
     Returns:
-    circles: list
+    - circles: list
         list of Circle objects
     '''
     return [Circle(x,y,1,id) for x,y,id in zip(xs,ys,ids)]
@@ -40,32 +40,37 @@ def CirclePlot(layout,
     Make a hierarchical circle plot using bokeh. Adds colors and annotations to the circles.
 
     Arguments:
-    - layout: dict
-        layout of the circles
-    - size: int
-        size of the plot
-    - annot_text: list
-        list of annotation dictionaries generated with AnnotCluster
-    - annot_top_n: int
-        number of highest proportion entries to show in the text annotations
-    - annot_na: bool
-        whether to show NA values in the text annotations
-    - singleton_annot_text: bool
-        assumes data is singletons, to allow faster mapping of annotations to data points
-    - annot_colors: dict
-        dictionary of annotation colors, generated with ColorAnnot
-    - base_fill: str
-        default fill color for the circles if there are no annotations
-    - outlines: dict
-        dictionary of outline colors, generated with ColorAnnot
-    - base_line: str
-        default outline color for the circles if there are no annotations
-    - base_line_width: int
-        default outline width for the circles if there are no annotations
-    - highlight_line_width: int
-        width of the outline for highlighted circles
-    - fixed_point_size: int
-        if set, overrides individual radii
+    - General:
+        - layout: dict
+            layout of the circles
+        - size: int
+            size of the plot
+    - Tooltip text:
+        - annot_text: list
+            list of annotation dictionaries generated with AnnotCluster
+        - annot_top_n: int
+            number of highest proportion entries to show in the text annotations
+        - annot_na: bool
+            whether to show NA values in the text annotations
+        - singleton_annot_text: bool
+            assumes data is singletons, to allow faster mapping of annotations to data points
+    - Fill coloring:
+        - annot_colors: dict
+            dictionary of annotation colors, generated with ColorAnnot
+        - base_fill: str
+            default fill color for the circles if there are no annotations
+    - Outline coloring:
+        - outlines: dict
+            dictionary of outline colors, generated with ColorAnnot
+        - base_line: str
+            default outline color for the circles if there are no annotations
+        - base_line_width: int
+            default outline width for the circles if there are no annotations
+        - highlight_line_width: int
+            width of the outline for highlighted circles
+    - Other:
+        - fixed_point_size: int
+            if set, overrides individual radii
 
     Returns:
     - p: bokeh.plotting.figure
@@ -270,21 +275,21 @@ def ExportFigure(layout, plot_data, size=5, legend_padding=1, as_scatter=False, 
     Export a plot from bokeh by replicating the same plot in matplotlib.
 
     Arguments:
-    layout: dict
+    - layout: dict
         layout of the circles
-    plot_data: dict
+    - plot_data: dict
         data used for plotting, output from CirclePlot
-    size: int
+    - size: int
         Height of the plot in inches. Extra width will be added for legends
-    legend_padding: int
+    - legend_padding: int
         Factor for extra space added for each legend. Default figure is 3, and each legend is 1.
-    as_scatter: bool
+    - as_scatter: bool
         If True, plot as scatter plot instead of circles (much faster with a lot more points). Circle plots cannot use scatter, as the radii do not scale properly.
-    fixed_point_size: int
+    - fixed_point_size: int
         If set, overrides individual radii. Use for setting a specific size for scatters with uniform size.
 
     Returns:
-    f: matplotlib.figure.Figure
+    - f: matplotlib.figure.Figure
     '''
     all_c=[]
     for lv, c_dict in layout.items():
