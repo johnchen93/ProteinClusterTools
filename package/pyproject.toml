@@ -4,10 +4,10 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ProteinClusterTools"
-version = "1.0"
+version = "1.0.1"
 authors = [
   { name="John Chen", email="jo.chn.93@gmail.com" },
-  { name="Barnabas Gall", email="barnabas.gall@anu.edu.au"}
+  { name="Barnabas Gall", email="barnabas.gall@anu.edu.au"},
 ]
 description = "Pipeline for clustering protein sequences in large scale datasets, using homology or pLM representation."
 readme = "README.md"
