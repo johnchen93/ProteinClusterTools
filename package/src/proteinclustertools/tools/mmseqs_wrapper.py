@@ -1,10 +1,11 @@
 import argparse
 import subprocess
+import os
 
 def RunMMseqs(fasta, out_dir='', prefix=''):
     # Run mmseqs
     outfile=prefix+'_mmseqs_search.tsv'
-    mmseqs_args = ['mmseqs', 'easy-search', fasta, fasta, out_dir+outfile, 'tmp']
+    mmseqs_args = ['mmseqs', 'easy-search', fasta, fasta, os.path.join(out_dir,outfile), 'tmp']
     opt_args=['--max-seqs', '1000', '--format-mode', '4', '--format-output', 'query,target,bits']
 
     mmseqs_args.extend(opt_args)
