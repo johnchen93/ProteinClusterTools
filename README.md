@@ -1,4 +1,6 @@
 # Protein Cluster Tools
+By John Chen and Barnabas Gall.
+
 A pipeline for analyzing protein families as clusters of related sequences.
 
 # Usage
