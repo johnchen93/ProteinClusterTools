@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ProteinClusterTools"
-version = "0.0.1"
+version = "1.0"
 authors = [
   { name="John Chen", email="jo.chn.93@gmail.com" },
 ]
 description = "Pipeline for clustering protein sequences in large scale datasets, using homology or pLM representation."
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.6"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
