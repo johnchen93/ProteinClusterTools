@@ -48,25 +48,25 @@ def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, radius_pad
 
     Args:
         General:
-            clusters (pd.DataFrame): table of cluster definitions, with columns 'id' for each sequence one column per "level" of clustering
-            levels (list): list of column names in clusters to use as levels of clustering. Must be in ascending order (lowest cut-off first) of hierarchy
-            minsize (int): minimum size of a cluster to be included in the layout
-            force_inclusion (list): list of sequence ids to force inclusion in the layout
+            - clusters (pd.DataFrame): table of cluster definitions, with columns 'id' for each sequence one column per "level" of clustering
+            - levels (list): list of column names in clusters to use as levels of clustering. Must be in ascending order (lowest cut-off first) of hierarchy
+            - minsize (int): minimum size of a cluster to be included in the layout
+            - force_inclusion (list): list of sequence ids to force inclusion in the layout
         Tuning layout:
-            pull (float): multiplier for the pull between circles when packing
-            radius_pad (float): padding between circles in the base (lowest) level
-            seed (int): random seed for layout. Use same seed to reproduce layout, assuming same input data and cycles of simulation
-            seed_coords (pd.DataFrame): table of seed coordinates for each cluster in the base level. Must have columns 'id', 'x', 'y'
-            pull_base (bool): whether to allow circles in the base level to pull each other. Still respects radius_pad, just makes the base level more compact.
+            - pull (float): multiplier for the pull between circles when packing
+            - radius_pad (float): padding between circles in the base (lowest) level
+            - seed (int): random seed for layout. Use same seed to reproduce layout, assuming same input data and cycles of simulation
+            - seed_coords (pd.DataFrame): table of seed coordinates for each cluster in the base level. Must have columns 'id', 'x', 'y'
+            - pull_base (bool): whether to allow circles in the base level to pull each other. Still respects radius_pad, just makes the base level more compact.
             Niche:
-                space_scale (float): multiplier for the space between circles on initial randomized layout.
-                expand_mult (float): multiplier for the expansion of circles. Somewhat unpredictable, can increase speed if too many circles start overlapping, but quite situational.
+                - space_scale (float): multiplier for the space between circles on initial randomized layout.
+                - expand_mult (float): multiplier for the expansion of circles. Somewhat unpredictable, can increase speed if too many circles start overlapping, but quite situational.
         Box2D simulation:
-            velocity_iterations (int): number of velocity iterations in the Box2D simulation
-            position_iterations (int): number of position iterations in the Box2D simulation
-            cycle_scale (int): multiplier for the number of cycles in the Box2D simulation per 50 child clusters
-            max_cycles (int): maximum number of cycles in the Box2D simulation
-            time_step (int): time step in the Box2D simulation
+            - velocity_iterations (int): number of velocity iterations in the Box2D simulation
+            - position_iterations (int): number of position iterations in the Box2D simulation
+            - cycle_scale (int): multiplier for the number of cycles in the Box2D simulation per 50 child clusters
+            - max_cycles (int): maximum number of cycles in the Box2D simulation
+            - time_step (int): time step in the Box2D simulation
 
     Returns:
         dict: dictionary of circles at each level of clustering. Each level is a dictionary of circles, with the id of the circle as the key.

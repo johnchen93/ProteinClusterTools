@@ -40,37 +40,37 @@ def CirclePlot(layout,
     Make a hierarchical circle plot using bokeh. Adds colors and annotations to the circles.
 
     Arguments:
-    layout: dict
+    - layout: dict
         layout of the circles
-    size: int
+    - size: int
         size of the plot
-    annot_text: list
+    - annot_text: list
         list of annotation dictionaries generated with AnnotCluster
-    annot_top_n: int
+    - annot_top_n: int
         number of highest proportion entries to show in the text annotations
-    annot_na: bool
+    - annot_na: bool
         whether to show NA values in the text annotations
-    singleton_annot_text: bool
+    - singleton_annot_text: bool
         assumes data is singletons, to allow faster mapping of annotations to data points
-    annot_colors: dict
+    - annot_colors: dict
         dictionary of annotation colors, generated with ColorAnnot
-    base_fill: str
+    - base_fill: str
         default fill color for the circles if there are no annotations
-    outlines: dict
+    - outlines: dict
         dictionary of outline colors, generated with ColorAnnot
-    base_line: str
+    - base_line: str
         default outline color for the circles if there are no annotations
-    base_line_width: int
+    - base_line_width: int
         default outline width for the circles if there are no annotations
-    highlight_line_width: int
+    - highlight_line_width: int
         width of the outline for highlighted circles
-    fixed_point_size: int
+    - fixed_point_size: int
         if set, overrides individual radii
 
     Returns:
-    p: bokeh.plotting.figure
+    - p: bokeh.plotting.figure
         bokeh figure object
-    manual_plot_data: dict
+    - manual_plot_data: dict
         data used for plotting, in a format that can be used to replicate the plot in matplotlib
     '''
     wheel_zoom=WheelZoomTool()

@@ -5,14 +5,14 @@ def AnnotateClusters(clusters, levels, annot_table, column, cluster_key, annot_k
     Function to aggregate annotations at the cluster level.
 
     Arguments:
-    clusters: DataFrame with cluster assignments, with each level of clustering as its own column
-    levels: List of levels (columns) to aggregate annotations within 'clusters'
-    annot_table: DataFrame with annotations to aggregate
-    column: Column in 'annot_table' to aggregate
-    cluster_key: Column in 'clusters' that contains the sequence ID
-    annot_key: Column in 'annot_table' that contains the sequence ID
-    numeric_func: Function to aggregate numeric data, default is 'mean'. Can be any string or function accepted by the Pandas.groupby.agg function.
-    dropna: Whether to drop NA values when aggregating numeric data. Default is False.
+    - clusters: DataFrame with cluster assignments, with each level of clustering as its own column
+    - levels: List of levels (columns) to aggregate annotations within 'clusters'
+    - annot_table: DataFrame with annotations to aggregate
+    - column: Column in 'annot_table' to aggregate
+    - cluster_key: Column in 'clusters' that contains the sequence ID
+    - annot_key: Column in 'annot_table' that contains the sequence ID
+    - numeric_func: Function to aggregate numeric data, default is 'mean'. Can be any string or function accepted by the Pandas.groupby.agg function.
+    - dropna: Whether to drop NA values when aggregating numeric data. Default is False.
 
     Returns a dictionary with the following keys
     - method: The method used to aggregate the data
@@ -139,17 +139,18 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
     Colors a set of annotations made with AnnotateClusters.
 
     Arguments:
-    annot: Dictionary with annotations, as returned by AnnotateClusters
-    cmap: Colormap to use. Can be a string (name of a Matplotlib colormap) or a Matplotlib colormap object.
-    top_n: Number of top categories to color. Default is None, which colors all categories.
-    saturation: Saturation of the colormap. Default is 1.
-    shuffle_colors_seed: Seed for shuffling colors in categorical data. Mostly useful when there are many categories and there is no preference for color order.
+    - annot: Dictionary with annotations, as returned by AnnotateClusters
+    - cmap: Colormap to use. Can be a string (name of a Matplotlib colormap) or a Matplotlib colormap object.
+    - top_n: Number of top categories to color. Default is None, which colors all categories.
+    - saturation: Saturation of the colormap. Default is 1.
+    - shuffle_colors_seed: Seed for shuffling colors in categorical data. Mostly useful when there are many categories and there is no preference for color order.
                          Default is None, which does not shuffle colors. 
-    vmin: Minimum value for a numeric colormap. Default is None, which uses the minimum value in the data.
-    vmax: Maximum value for a numeric colormap. Default is None, which uses the maximum value in the data.
-    cmap_is_categorical: When a colormap object is given (instead of a string), if the colormap should be considered categorical. Only applies for categorical data. Default is True.
-    binary_blend: For blending colors. If True, treat all instances in categorical data to be yes/no (i.e., max count of 1 if present). Default is False.
-    color_format: Format of the color. Can be 'bokeh', 'hex' or 'tuple'. Default is 'bokeh'.
+    - vmin: Minimum value for a numeric colormap. Default is None, which uses the minimum value in the data.
+    - vmax: Maximum value for a numeric colormap. Default is None, which uses the maximum value in the data.
+    - cmap_is_categorical: When a colormap object is given (instead of a string), if the colormap should be considered categorical. Only applies for categorical data. Default is True.
+    - binary_blend: For blending colors. If True, treat all instances in categorical data to be yes/no (i.e., max count of 1 if present). Default is False.
+    - color_format: Format of the color. Can be 'bokeh', 'hex' or 'tuple'. Default is 'bokeh'.
+    - direct_map_colors: If True, map the color directly to the category (assumes only one color per id). Default is False, which blends the colors based on the count of each category.
 
     Returns a dictionary with the following:
     - value: The column in 'annot_table' that was aggregated, useful reference for labelling legends
@@ -166,7 +167,7 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
 
     # settle color scheme
     if type(cmap)==str:
-        color_map=mpl.cm.get_cmap(cmap)
+        color_map=mpl.colormaps.get_cmap(cmap)
         is_categorical=cmap in ['tab10', 'tab20', 'tab20b', 'tab20c','Pastel1', 'Pastel2', 'Paired', 'Set1', 'Set2', 'Set3','Accent','Dark2']
     else:
         color_map=cmap
