@@ -3,6 +3,8 @@ By John Chen and Barnabas Gall.
 
 A pipeline for analyzing protein families as clusters of related sequences.
 
+Package available on [PyPI](https://pypi.org/project/ProteinClusterTools/).
+
 # Usage
 See details on installation below.  
   
@@ -59,6 +61,7 @@ pyyaml
 ipykernel
 bokeh
 umap-learn
+networkx
 fair-esm
 proteinclustertools
 ```
