@@ -38,10 +38,10 @@ def FlattenHierarchy(linkage_matrix, linkage_ids, cutoffs, out_dir='', out_prefi
 def linkage_to_newick(linkage_matrix, leaf_names):
     def get_newick(node, newick, parentdist, leaf_names):
         if node.is_leaf():
-            return "%s:%.2f%s" % (leaf_names[node.id], parentdist - node.dist, newick)
+            return f"{leaf_names[node.id]}:{parentdist - node.dist}{newick}"
         else:
             if len(newick) > 0:
-                newick = "):%.2f%s" % (parentdist - node.dist, newick)
+                newick = f"):{node.dist}{newick}"
             else:
                 newick = ");"
             newick = get_newick(node.get_left(), newick, node.dist, leaf_names)
@@ -61,4 +61,17 @@ def NameInternalNodes(treefile):
         
         clade.name=f'node_{node}'
         node+=1
-    Phylo.write(tree, treefile, 'newick')
+    write_newick(tree, treefile)
+
+def write_newick(tree, out_file):
+    def _write_node(node):
+        node_name = f"{node.name}:{node.branch_length}"
+        if node.is_terminal():
+            return node_name
+        else:
+            children = ','.join(_write_node(child) for child in node.clades)
+            return f"({children}){node_name}"
+
+    newick_string = _write_node(tree.root) + ";"
+    with open(out_file, "w") as file_handle:
+        file_handle.write(newick_string + "\n")
