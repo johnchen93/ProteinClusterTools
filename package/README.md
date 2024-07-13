@@ -1,5 +1,5 @@
 # Protein Cluster Tools
-By John Chen and Barnabas Gall. [GitHub](https://github.com/johnchen93/ProteinClusterTools)
+By John Chen and Barnabas Gall. Usage examples on [GitHub](https://github.com/johnchen93/ProteinClusterTools).
 
 A pipeline for analyzing protein families as clusters of related sequences.
 
@@ -19,11 +19,12 @@ The work flow broadly follows 3 steps:
         
 
 # Installation
-It is recommended to use a package manager like miniconda to install the required environment. If the user prefers a more modular install, see **Details on dependencies** below.
+## All-in-one install using conda
+**It is recommended to use a package manager like miniconda to install the required environment.**  If the user prefers a more modular install, see **Details on dependencies** below.
 
-**Note on operating system:** The pipeline is in Python, but a number of dependencies require a Linux environment. If running this on Windows, it is recommended to use Windows Subsystem for Linux (WSL). Alternatively, windows users can SSH into a Linux computer. 
+**Note on operating system:** The pipeline is in Python, but some dependencies require a Linux environment. If running this on Windows, it is recommended to use Windows Subsystem for Linux (WSL). Alternatively, windows users can SSH into a Linux computer. 
 
-**Note on hardware:** Part of the pipeline requires a GPU for using protein language models and vector representations. It is recommended to install on a computer that has a GPU (in theory CPU will also work but will be slower). Otherwise, the homology based method can be run on just CPU. The env.yaml for installation *assumes the user has an Nvidia GPU that uses CUDA*, if using an AMD GPU the user can try installing pytorch manually by pip (see below).
+**Note on hardware:** Part of the pipeline requires a GPU for using protein language models and vector representations. It is recommended to install on a computer that has a GPU (in theory CPU will also work but will be slower). Otherwise, the homology based method can be run on just CPU. The env.yaml for installation *assumes the user has an Nvidia GPU (i.e., uses CUDA)*, if using an AMD GPU the user can try installing pytorch manually by pip (see below).
 
 **Note for conda:** When using conda, it is recommended to install Mamba into the base environment for faster dependency resolution. Then use the mamba command in place of the conda command (they are mostly interchangeable).
 ```
@@ -34,7 +35,10 @@ The command to install all requirements using one command is as follows:
 ```
 conda env create -f env.yaml
 ```
-
+or if using mamba:
+```
+mamba env create -f env.yaml
+```
 This will create a new environment called "proteinclustertools". To run code from the command line, be sure to activate this environment first. For Jupyter notebooks (such as the examples in [analyses](analyses/)), select this as the kernel.
 ```
 conda activate proteinclustertools
