@@ -108,6 +108,14 @@ def iterative_merge(datasets, max_datasets=None):
     """
     Repeatedly apply pairwise merging until one dataset remains.
     """
+    # in the case that merging is not needed
+    if len(datasets) == 1:
+        # load the dataset with pickle
+        with open(datasets[0], 'rb') as f:
+            data=list(pickle.load(f).values())
+        return data
+    
+    # Start the merging process
     cycle=1
     while len(datasets) > 1:
         if max_datasets is None:
