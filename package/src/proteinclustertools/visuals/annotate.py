@@ -134,7 +134,7 @@ def FormatColor(color, format='bokeh', scale=255):
 
 
 def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_colors_seed=None, 
-                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False):
+                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False, annot_order=None):
     '''
     Colors a set of annotations made with AnnotateClusters.
 
@@ -149,8 +149,9 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
     - vmax: Maximum value for a numeric colormap. Default is None, which uses the maximum value in the data.
     - cmap_is_categorical: When a colormap object is given (instead of a string), if the colormap should be considered categorical. Only applies for categorical data. Default is True.
     - binary_blend: For blending colors. If True, treat all instances in categorical data to be yes/no (i.e., max count of 1 if present). Default is False.
-    - color_format: Format of the color. Can be 'bokeh', 'hex' or 'tuple'. Default is 'bokeh'.
+    - color_format: Format of the color to output. Can be 'bokeh', 'hex' or 'tuple'. Default is 'bokeh'.
     - direct_map_colors: If True, map the color directly to the category (assumes only one color per id). Default is False, which blends the colors based on the count of each category.
+    - annot_order: Order of annotations for categorical data. Default is None, which orders by overall count in the dataset.
 
     Returns a dictionary with the following:
     - value: The column in 'annot_table' that was aggregated, useful reference for labelling legends
@@ -206,10 +207,13 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
         all_levels=[]
         for level in annot['levels']:
             all_levels.append(annot[level])
-        all_level_df=pd.concat(all_levels).dropna(subset=['value']) # ignore NA values when distributing colors
-        # all categories in order of count
-        all_cats=all_level_df.groupby('value')['count'].sum().reset_index().sort_values('count', ascending=False)['value'].values
-
+        
+        if annot_order is not None:
+            all_cats=annot_order
+        else:
+            all_level_df=pd.concat(all_levels).dropna(subset=['value']) # ignore NA values when distributing colors
+            # all categories in order of count
+            all_cats=all_level_df.groupby('value')['count'].sum().reset_index().sort_values('count', ascending=False)['value'].values
         c_mapping=AssignCategoricalColors(all_cats, color_map, shuffle_colors_seed, is_categorical, top_n)
         colors['categories']={k:FormatColor(v, color_format) for k,v in c_mapping.items()}
         

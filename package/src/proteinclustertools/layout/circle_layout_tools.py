@@ -40,8 +40,8 @@ def CenterOfMass(circles): # not used
     y/=len(circles)
     return x, y
 
-def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, radius_pad=3, force_inclusion=None, velocity_iterations=16, position_iterations=6,
-                cycle_scale=1000, max_cycles=100_000, time_step=1, pull_base=False, seed=None, seed_coords=None, expand_mult=1):
+def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, level_pull=None, radius_pad=3, force_inclusion=None, velocity_iterations=16, position_iterations=6,
+                cycle_scale=1000, min_cycles=1000, max_cycles=100_000, time_step=1, level_time_step=None, pull_base=False, seed=None, seed_coords=None, expand_mult=1):
     
     '''
     Function to turn a table of cluster definitions into a hierarchical layout of circles
@@ -54,6 +54,7 @@ def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, radius_pad
             - force_inclusion (list): list of sequence ids to force inclusion in the layout
         Tuning layout:
             - pull (float): multiplier for the pull between circles when packing
+            - level_pull (dict): dictionary of level-specific pull multipliers
             - radius_pad (float): padding between circles in the base (lowest) level
             - seed (int): random seed for layout. Use same seed to reproduce layout, assuming same input data and cycles of simulation
             - seed_coords (pd.DataFrame): table of seed coordinates for each cluster in the base level. Must have columns 'id', 'x', 'y'
@@ -67,6 +68,7 @@ def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, radius_pad
             - cycle_scale (int): multiplier for the number of cycles in the Box2D simulation per 50 child clusters
             - max_cycles (int): maximum number of cycles in the Box2D simulation
             - time_step (int): time step in the Box2D simulation
+            - level_time_step (dict): dictionary of level-specific time steps
 
     Returns:
         dict: dictionary of circles at each level of clustering. Each level is a dictionary of circles, with the id of the circle as the key.
@@ -95,15 +97,29 @@ def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, radius_pad
             parent_level=levels[lv-1]
             # subset=clusters[clusters[level_id].isin(radii.index) & clusters[levels[lv-1]].isin(data[parent_level].keys())]
             subset=clusters[clusters[level_id].isin(radii.index)]
+            # print(subset)
             
             print('preparing child clusters')
             for cluster, group in subset.groupby(parent_level):
                 child_clusters = group[level_id].unique()
                 # print(f'Level {lv} ({level_id}), parent: {cluster}, clusters: {len(group)}, children: {len(child_clusters)}')
                 cycles=min( math.ceil(max(len(child_clusters)/50, 1) * cycle_scale), max_cycles )
+                cycles=max(cycles, min_cycles)
+
+                if level_pull is not None and level_id in level_pull:
+                    cur_pull=level_pull[level_id]
+                    # print(f'Adjusting pull for level {level_id} to {cur_pull}')
+                else:
+                    cur_pull=pull
+                
+                if level_time_step is not None and level_id in level_time_step:
+                    cur_time_step=level_time_step[level_id]
+                    # print(f'Adjusting time step for level {level_id} to {cur_time_step}')
+                else:
+                    cur_time_step=time_step
                 process_args.append((child_clusters, radii, radius_pad, space_scale, seed, seed_pos,
-                                        cycles, None, pull, expand_mult,
-                                        velocity_iterations, position_iterations, time_step, {'plevel':parent_level, 'parent':cluster,'level':level_id}))    
+                                        cycles, None, cur_pull, expand_mult,
+                                        velocity_iterations, position_iterations, cur_time_step, {'plevel':parent_level, 'parent':cluster,'level':level_id}))    
 
         print('starting pool')
         with Pool() as pool:

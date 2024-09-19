@@ -29,10 +29,10 @@ def CoordinatesToCircles(xs, ys, ids):
 rgba_re=re.compile(r'rgba\((\d+),(\d+),(\d+),(\d+)\)')
 output_notebook()
 black='rgba(0,0,0,255)'
-def CirclePlot(layout, 
-               size=800,
+def CirclePlot(layout, layout_order=None,
+               size=800, fill_legend_width=200, outline_legend_width=200, # general
                annot_text:list=None, annot_top_n:int=None, annot_na=True, singleton_annot_text=False, # annotation related
-               annot_colors=None, base_fill=None, # face color related
+               annot_colors=None, base_fill=None,  # face color related
                outlines=None, base_line='rgba(0,0,0,255)', base_line_width=1, highlight_line_width=1, # outline related
                fixed_point_size=None # if set, overrides individual radii
                ):
@@ -91,7 +91,7 @@ def CirclePlot(layout,
 
     # plotting circles
     renderers={}
-    levels=list(layout.keys())
+    levels=sorted(list(layout.keys()), key=float) if layout_order is None else layout_order
     manual_plot_data=defaultdict(list)
     annot_hover=[]
     for tgt_level in levels:
@@ -178,11 +178,11 @@ def CirclePlot(layout,
     # Layout
     legends=[]
     if annot_colors is not None:
-        legend, manual_data=MakeLegend(annot_colors, p)
+        legend, manual_data=MakeLegend(annot_colors, p, legend_width=fill_legend_width)
         manual_plot_data['fill_legend']=manual_data
         legends.append(legend)
     if outlines is not None:
-        legend, manual_data=MakeLegend(outlines, p, outline=True)
+        legend, manual_data=MakeLegend(outlines, p, outline=True, legend_width=outline_legend_width)
         manual_plot_data['line_legend']=manual_data
         legends.append(legend)
 
@@ -191,8 +191,8 @@ def CirclePlot(layout,
 
     return p, manual_plot_data
 
-def MakeLegend(annot_colors, p, outline=False):
-    legend_fig = figure(width=200, height=p.height, toolbar_location=None, min_border=0, outline_line_color=None)
+def MakeLegend(annot_colors, p, outline=False, legend_width=200):
+    legend_fig = figure(width=legend_width, height=p.height, toolbar_location=None, min_border=0, outline_line_color=None)
     legend_fig.xaxis.visible = False
     legend_fig.yaxis.visible = False
     legend_fig.xgrid.visible = False

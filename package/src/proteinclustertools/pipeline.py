@@ -5,7 +5,7 @@ from .tools.mmseqs_wrapper import RunMMseqs
 from .tools.summarize_distribution import read_and_sample, calculate_percentiles, plot_distribution
 from .tools.esm_wrapper import Embed
 from .tools.sanitize_fasta_headers import sanitize_fasta_headers
-from .tools.kmeans import KMeansBisecting
+from .tools.kmeans import KMeansBisecting, BisectingKMeansKeepTree, compute_linkage_from_tree, tree_to_newick
 
 import matplotlib.pyplot as plt
 import pickle
@@ -15,6 +15,8 @@ import os
 from sklearn.decomposition import PCA
 from umap import UMAP
 import shutil
+from scipy.cluster.hierarchy import fcluster
+from Bio import Phylo
 
 def StateFile(out_label):
     return f'{out_label}_states.pkl'
@@ -93,6 +95,8 @@ vec.add_argument('-KF', '-keep_features', type=int, help='Number of features to 
 # Kmeans clustering
 vec.add_argument('-KM', '-kmeans', action='store_true', help='Run kmeans clustering')
 vec.add_argument('-K', '-kmeans_clusters', nargs='+', type=int, help='Number of kmeans clusters. Also used for setting cluster count when flattening hierachical clusters.', default=[])
+vec.add_argument('-FKM', '-flatten_kmeans', action='store_true', help='Subsect kmeans clusters based on max_k tree')
+vec.add_argument('-max_k', type=int, help='Max K to further subdivide into clusters')
 # Hierarchical clustering
 vec.add_argument('-HC', '-hierarchical_clustering', action='store_true', help='Run hierarchical clustering')
 vec.add_argument('-CT', '-convert_hierarchical_tree', action='store_true', help='Convert hierarchical tree to newick format')
@@ -120,6 +124,8 @@ cluster_cutoffs=args.cc # cutoffs for clustering
 run_kmeans=False or args.KM # run kmeans clustering
 kmeans_clusters=args.K # number of kmeans clusters
 keep_features=args.KF # number of features to use in kmeans clustering
+flatten_kmeans=False or args.FKM # subsect kmeans clusters based on max_k tree
+flatten_kmeans_max_k=args.max_k # max K to further subdivide into clusters
 
 run_hierarchical_clustering=False or args.HC # run hierarchical clustering
 convert_hierarchical_tree=False or args.CT # convert hierarchical tree to newick format
@@ -247,9 +253,9 @@ if embed_vectors:
     SaveStates(states, state_file)
 
 if run_kmeans:
-    kmeans_path=os.path.join(out_directory, 'kmeans/')
-    # make sure the output directory exists
-    os.makedirs(kmeans_path, exist_ok=True)
+    # kmeans_path=os.path.join(out_directory, 'kmeans/max_k/')
+    # # make sure the output directory exists
+    # os.makedirs(kmeans_path, exist_ok=True)
 
     print('Loading embeddings for kmeans')
     ids, embeddings=LoadEmbeddings(out_directory, states, args.f)
@@ -259,12 +265,73 @@ if run_kmeans:
 
     # run kmeans
     print('Running kmeans')
-    KMeansBisecting(embeddings, kmeans_clusters, ids, kmeans_path, out_prefix)
+    # KMeansBisecting(embeddings, kmeans_clusters, ids, kmeans_path, out_prefix)
+
+    # save each cluster file as a 'max K' file, that is then fed to a lower K clustering
+    new_states={}
+    for k in kmeans_clusters:
+        kmeans = BisectingKMeansKeepTree(n_clusters=k, random_state=0)
+        kmeans.fit(embeddings)
+
+        # paths
+        label_file=f'kmeans/max_k/k{k}_labels.csv'
+        tree_file=f'kmeans/max_k/k{k}_tree.nwk'
+        os.makedirs(os.path.join(out_directory, 'kmeans/max_k/'), exist_ok=True)
+
+
+        labels=pd.DataFrame({'id':ids, 'label':kmeans.labels_+1})
+        labels.to_csv(os.path.join(out_directory, label_file), index=False)
+        # make tree structure
+        tree=tree_to_newick(kmeans._bisecting_tree)
+
+        # write tree to file
+        with open(os.path.join(out_directory, tree_file), 'w') as f:
+            f.write(tree)
+        
+        new_states[k]={'labels':label_file, 'tree':tree_file}
+    states['max_k']=new_states
+    SaveStates(states, state_file)
+
+if flatten_kmeans:
+    # check if max_k exists
+    if flatten_kmeans_max_k is None:
+        print('Please provide a max K to subsect kmeans clusters. (use -max_k)')
+    elif flatten_kmeans_max_k not in states['max_k']:
+        print(f'Max K not found in states. There are {len(states["max_k"])} max K values processed: {list(states["max_k"].keys())}')
+ 
+    # read tree
+    tree_file=PathToFile(out_directory, states['max_k'][flatten_kmeans_max_k]['tree'])
+    tree=Phylo.read(tree_file, 'newick')
+    linkage_matrix, leaf_names = compute_linkage_from_tree(tree)
+    labels_file=PathToFile(out_directory, states['max_k'][flatten_kmeans_max_k]['labels'])
+    labels=pd.read_csv(labels_file)
+
+    # make sure the output directory exists
+    k_out_path=os.path.join(out_directory, f'kmeans/flattened_{flatten_kmeans_max_k}/')
+    # print(k_out_path)
+    os.makedirs(k_out_path, exist_ok=True)
+
+    # create smaller clusters
+    for smaller_k in kmeans_clusters:
+        if smaller_k > flatten_kmeans_max_k:
+            continue
+        print('Flattening kmeans clusters to:', smaller_k)
+        # Apply fcluster to get cluster labels
+        cluster_labels = fcluster(linkage_matrix, smaller_k, criterion='maxclust')
+
+        # write labels to file
+        leaf_labels=pd.DataFrame({'label':leaf_names, 'cluster':cluster_labels})
+
+        # merge on labels
+        merged=labels.merge(leaf_labels, on='label')
+        # write to file
+        # print(os.path.join(k_out_path, f'k{smaller_k}_clusters.csv'))
+        merged[['id','cluster']].to_csv(os.path.join(k_out_path, f'{out_prefix}_kmeans_bisecting_{smaller_k}.csv'), index=False)
 
 if run_umap:
     # load vector embeddings
     print('Loading embeddings for UMAP')
-    ids, embeddings=LoadEmbeddings(out_directory, states, args.f)    
+    ids, embeddings=LoadEmbeddings(out_directory, states, args.f)
 
     embeddings=ReduceVectors(embeddings, keep_features)
     
