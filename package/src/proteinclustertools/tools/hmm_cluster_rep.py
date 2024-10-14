@@ -18,16 +18,20 @@ aa_list = ['H', 'K', 'R',                # (+)
            '*']
 _non_aa_re = re.compile(f'[^{"".join(aa_list)}]+')
 
-def ReadFasta(file, id_index=None):
+def ReadFasta(file, id_index=None, verbose=False):
     seqs={}
+    excluded=0
     for record in SeqIO.parse(file, "fasta"):
         id=record.id
         if id_index is not None:
             id=id.split('|')[id_index]
         if _non_aa_re.search(str(record.seq)):
-            print(f'Warning: {id} contains non-amino acid characters. Excluded from analysis.')
+            if verbose:
+                print(f'Warning: {id} contains non-amino acid characters. Excluded from analysis.')
+            excluded+=1
             continue
         seqs[id]=str(record.seq)
+    print(f'(Warning reading fasta) Excluded {excluded} sequences with non-amino acid characters.')
     return seqs
 
 def FilterFastas(seqs, filter, id_map=None):
@@ -62,7 +66,7 @@ def process_cluster(cluster_data):
     WriteFasta(fa_path, seqs)
     
     # Run external commands
-    subprocess.call(['mafft', fa_path], stdout=open(msa_path, 'w'), stderr=subprocess.DEVNULL)
+    subprocess.call(['mafft', '--thread', '-1', fa_path], stdout=open(msa_path, 'w'), stderr=subprocess.DEVNULL)
     subprocess.call(['hmmbuild', hmm_path, msa_path], stdout=subprocess.DEVNULL)
     subprocess.call(['hmmsearch', '--tblout', hits_path, hmm_path, fa_path], stdout=subprocess.DEVNULL)
 
