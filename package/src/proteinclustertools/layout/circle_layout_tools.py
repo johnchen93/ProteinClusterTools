@@ -41,7 +41,7 @@ def CenterOfMass(circles): # not used
     return x, y
 
 def Box2DLayout(clusters, levels, minsize=0, space_scale=1.1, pull=1, level_pull=None, radius_pad=3, force_inclusion=None, velocity_iterations=16, position_iterations=6,
-                cycle_scale=1000, min_cycles=1000, max_cycles=100_000, time_step=1, level_time_step=None, pull_base=False, seed=None, seed_coords=None, expand_mult=1):
+                cycle_scale=1000, min_cycles=1000, max_cycles=100_000, time_step=0.1, level_time_step=None, pull_base=False, seed=None, seed_coords=None, expand_mult=1):
     
     '''
     Function to turn a table of cluster definitions into a hierarchical layout of circles
