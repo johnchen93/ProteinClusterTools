@@ -95,6 +95,8 @@ def CirclePlot(layout, layout_order=None,
     manual_plot_data=defaultdict(list)
     annot_hover=[]
     for tgt_level in levels:
+        # print(f'Plotting level {tgt_level}')
+        # print('Organizing data')
         x=[c.x for c in layout[tgt_level].values()]
         y=[c.y for c in layout[tgt_level].values()]
         r=[c.r for c in layout[tgt_level].values()]
@@ -107,6 +109,7 @@ def CirclePlot(layout, layout_order=None,
                             'level':[tgt_level]*len(x),
                             'size':[c.size for c in layout[tgt_level].values()]
                             }
+        # print('Making tooltip text')
         # add text
         if annot_text is not None:
             for annot in annot_text:
@@ -125,13 +128,14 @@ def CirclePlot(layout, layout_order=None,
                 else:
                     hover_text=[None]*len(x)
                 draw_dict[annot_key]=hover_text
-
+        # print('Drawing circles')
         circles=ColumnDataSource(data=draw_dict)
         if fixed_point_size is None:
             renderers[tgt_level]=p.circle('x', 'y', radius='r', fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
         else:
             renderers[tgt_level]=p.scatter('x', 'y', size=fixed_point_size, fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
 
+        # print('Collecting plot data')
         # save data for manual plotting
         manual_plot_data['x'].extend(x)
         manual_plot_data['y'].extend(y)
@@ -153,6 +157,7 @@ def CirclePlot(layout, layout_order=None,
         manual_plot_data['name'].extend([c.id for c in layout[tgt_level].values()])
         manual_plot_data['level'].extend([tgt_level]*len(x))
     
+    # print('Finishing up')
     # Define tooltips
     no_size=all([v is None for v in draw_dict['size']])
     tooltips = [
@@ -189,7 +194,7 @@ def CirclePlot(layout, layout_order=None,
     layout=row(*([p] + legends + [dropdown]))
     show(layout)
 
-    return p, manual_plot_data
+    return layout, manual_plot_data
 
 def MakeLegend(annot_colors, p, outline=False, legend_width=200):
     legend_fig = figure(width=legend_width, height=p.height, toolbar_location=None, min_border=0, outline_line_color=None)
@@ -233,33 +238,42 @@ def MakeLegend(annot_colors, p, outline=False, legend_width=200):
     manual_plot_data['title']=legend_fig.title.text
     return legend_fig, manual_plot_data
 
+import multiprocessing as mp
+
 def MakeHoverText(annot, level, ids, top_n=None, blank_fill=None, cluster_sizes=None, annot_na=True):
     hover_text=[] # one per id, in the order they appear
     is_numeric=annot['method']!='counts'
+    
+    # use multiprocessing
+    with mp.Pool() as pool:
+        hover_text=pool.starmap(ClusterHoverText, [(annot, level, id, top_n, blank_fill, 
+                                                    cluster_sizes[i] if cluster_sizes is not None else None, 
+                                                    annot_na, is_numeric) for i, id in enumerate(ids)])
 
-    for i, id in enumerate(ids):
-        cluster_size=None if cluster_sizes is None else cluster_sizes[i]
-        if id not in annot[level].id.values:
-            hover_text.append(blank_fill)
-        else:
-            data=annot[level].loc[annot[level].id==id].copy()
-            if not annot_na:
-                data=data.dropna(subset=['value'])
-            if is_numeric:
-                hover_text.append(f'{data.value.iloc[0]:.2f}')
-            else:
-                total=data['count'].sum() if cluster_size is None else cluster_size # explicit will be more accurate as some may just be missing annotations
-                data['frac']=(data['count']/total*100).round(2)
-                item_total=len(data)
-                if top_n is not None:
-                    data=data.nlargest(top_n, 'count')
-                row_text=[]
-                for row in data.itertuples():
-                    row_text.append(f'{row.value}: {row.count} ({row.frac}%)')
-                if item_total!=len(data):
-                    row_text.append(f'...{item_total-len(data)} more')
-                hover_text.append('<br>'.join(row_text))
     return hover_text
+
+def ClusterHoverText(annot, level, id, top_n=None, blank_fill=None, cluster_size=None, annot_na=True, is_numeric=False):
+    # cluster_size=None if cluster_sizes is None else cluster_sizes[i]
+    if id not in annot[level].id.values:
+        return blank_fill
+    else:
+        data=annot[level].loc[annot[level].id==id].copy()
+        if not annot_na:
+            data=data.dropna(subset=['value'])
+        if is_numeric:
+            return f'{data.value.iloc[0]:.2f}'
+        else:
+            total=data['count'].sum() if cluster_size is None else cluster_size # explicit will be more accurate as some may just be missing annotations
+            data['frac']=(data['count']/total*100).round(2)
+            item_total=len(data)
+            if top_n is not None:
+                data=data.nlargest(top_n, 'count')
+            row_text=[]
+            for row in data.itertuples():
+                row_text.append(f'{row.value}: {row.count} ({row.frac}%)')
+            if item_total!=len(data):
+                row_text.append(f'...{item_total-len(data)} more')
+            return '<br>'.join(row_text)
 
 #####
 # Saving figures as PDF

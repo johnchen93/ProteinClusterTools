@@ -132,9 +132,10 @@ def FormatColor(color, format='bokeh', scale=255):
     elif format=='tuple':
         return tuple(color)
 
+import multiprocessing as mp
 
 def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_colors_seed=None, 
-                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False, annot_order=None):
+                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False, annot_order=None, min_count=0):
     '''
     Colors a set of annotations made with AnnotateClusters.
 
@@ -227,30 +228,46 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
                 data.dropna(subset=['color'], inplace=True)
                 colors[level]=dict(zip(data['id'], data['color'].apply(lambda x: FormatColor(x, color_format))))
                 continue
-            for group, subdata in data.groupby('id'):
-                r,g,b=0,0,0
-                total=subdata['count'].sum() if not binary_blend else len(subdata)
-                for row in subdata.itertuples():
-                    weight=row.count if not binary_blend else 1
-                    if row.value not in c_mapping: 
-                        r+=weight
-                        g+=weight
-                        b+=weight
-                    else:
-                        r+=row.color[0]*weight
-                        g+=row.color[1]*weight
-                        b+=row.color[2]*weight
-                    
-                if total==0:
-                    blended[group]='rgba(0,0,0,0)'
-                else:
-                    r/=total
-                    g/=total
-                    b/=total
-                    blended[group]=FormatColor((r,g,b,1), color_format)
+            # use multiprocessing to speed up the process
+
+            inputs=[]
+            ids=[]
+            for id, subdata in data.groupby('id'):
+                if min_count>0:
+                    subdata=subdata[subdata['count']>=min_count]
+                inputs.append(subdata)
+                ids.append(id)
+
+            with mp.Pool() as pool:
+                # blended=dict(zip(data['id'], pool.starmap(BlendedClusterColor, [(subdata, c_mapping, binary_blend, color_format) for _, subdata in data.groupby('id')])))
+                results=pool.starmap(BlendedClusterColor, [(subdata, c_mapping, binary_blend, color_format) for subdata in inputs])
+            blended=dict(zip(ids, results))
             colors[level]=blended
         
     return colors
+
+def BlendedClusterColor(subdata, c_mapping, binary_blend=False, color_format='bokeh'):
+    r,g,b=0,0,0
+    total=subdata['count'].sum() if not binary_blend else len(subdata)
+    for row in subdata.itertuples():
+        weight=row.count if not binary_blend else 1
+        if row.value not in c_mapping: 
+            r+=weight
+            g+=weight
+            b+=weight
+        else:
+            r+=row.color[0]*weight
+            g+=row.color[1]*weight
+            b+=row.color[2]*weight
+        
+    if total==0:
+        return 'rgba(0,0,0,0)'
+    else:
+        r/=total
+        g/=total
+        b/=total
+        return FormatColor((r,g,b,1), color_format)
+
 
 ### Unused below
 def OutlineClusters(clusters, levels, targets, rep_map=None, mapping:dict=None, map_func=None, color='red', label='selected', alpha=.7):
