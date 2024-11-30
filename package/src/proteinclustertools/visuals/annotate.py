@@ -135,7 +135,7 @@ def FormatColor(color, format='bokeh', scale=255):
 import multiprocessing as mp
 
 def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_colors_seed=None, 
-                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False, annot_order=None, min_count=0):
+                vmin=None, vmax=None, cmap_is_categorical=True, binary_blend=False, color_format='bokeh', direct_map_colors=False, annot_order=None, min_count=0, levels=None):
     '''
     Colors a set of annotations made with AnnotateClusters.
 
@@ -175,6 +175,7 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
         color_map=cmap
         is_categorical=cmap_is_categorical
     color_map=AdjustColormapSaturation(color_map, saturation)
+    levels=annot['levels'] if levels is None else levels
 
     colors={'value':annot['value'], 'method':annot['method']}
     if annot['method']!='counts':
@@ -189,7 +190,7 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
         colors['min']=min_value
         colors['max']=max_value
         
-        for level in annot['levels']:
+        for level in levels:
             data=annot[level].copy()
             values=data['value']
             normalized_data = (values - min_value) / (max_value - min_value)
@@ -206,7 +207,7 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
         # get all categories
         
         all_levels=[]
-        for level in annot['levels']:
+        for level in levels:
             all_levels.append(annot[level])
         
         if annot_order is not None:
@@ -218,7 +219,7 @@ def ColorAnnot( annot:dict, cmap='viridis', top_n=None, saturation=1, shuffle_co
         c_mapping=AssignCategoricalColors(all_cats, color_map, shuffle_colors_seed, is_categorical, top_n)
         colors['categories']={k:FormatColor(v, color_format) for k,v in c_mapping.items()}
         
-        for level in annot['levels']:
+        for level in levels:
             data=annot[level].copy()
             # map the category to the color
             data['color']=data['value'].map(c_mapping)

@@ -1,6 +1,7 @@
 # test bokeh
 from bokeh.plotting import figure, show, output_notebook
-from bokeh.models import WheelZoomTool, BoxZoomTool, HoverTool, ColumnDataSource, CustomJS, LegendItem, Legend, ColorBar, LinearColorMapper
+from bokeh.models import WheelZoomTool, BoxZoomTool, HoverTool, ColumnDataSource, CustomJS, \
+                        LegendItem, Legend, ColorBar, LinearColorMapper, TableColumn, DataTable, TapTool
 from bokeh.models.widgets import Select
 from bokeh.layouts import column, row
 from ..layout.circle_collision import Circle
@@ -35,6 +36,13 @@ def CirclePlot(layout, layout_order=None,
                annot_colors=None, base_fill=None,  # face color related
                outlines=None, base_line='rgba(0,0,0,255)', base_line_width=1, highlight_line_width=1, # outline related
                fixed_point_size=None # if set, overrides individual radii
+                ,
+               ## more experimental features
+                mapping_table=None,
+                data_on_select_table=None,
+                data_key_column='id',
+                data_table_width=800,
+                data_table_height=300
                ):
     '''
     Make a hierarchical circle plot using bokeh. Adds colors and annotations to the circles.
@@ -94,6 +102,13 @@ def CirclePlot(layout, layout_order=None,
     levels=sorted(list(layout.keys()), key=float) if layout_order is None else layout_order
     manual_plot_data=defaultdict(list)
     annot_hover=[]
+    apply_data_table=mapping_table is not None and data_on_select_table is not None
+    if apply_data_table:
+        # downfilter to only Entries that have data
+        mapping_table=mapping_table[mapping_table[data_key_column].isin(data_on_select_table[data_key_column])]
+        data_on_select_table=data_on_select_table.reset_index(drop=True)
+
+    render_sources={}
     for tgt_level in levels:
         # print(f'Plotting level {tgt_level}')
         # print('Organizing data')
@@ -107,8 +122,34 @@ def CirclePlot(layout, layout_order=None,
         draw_dict={'x':x, 'y':y, 'r':r, 'colors':colors, 'line_colors':line_colors, 'line_widths':line_widths,
                             'name':[c.id for c in layout[tgt_level].values()], 
                             'level':[tgt_level]*len(x),
-                            'size':[c.size for c in layout[tgt_level].values()]
+                            'size':[c.size for c in layout[tgt_level].values()],
                             }
+        
+        # if mappings are available, add them as circle data
+        if apply_data_table and tgt_level in mapping_table:
+            mapping_slice=mapping_table[[tgt_level,data_key_column]]
+            # assign based on c.id
+            # mapping = [data_on_select_table[data_on_select_table[data_key_column].isin(mapping_slice[mapping_slice[tgt_level]==c.id][data_key_column])].index.to_list() \
+            #           for c in layout[tgt_level].values()]
+            
+            # use multiprocessing for mapping task
+            with mp.Pool() as pool:
+                mapping=pool.starmap(GetTableIndices, [(data_on_select_table, mapping_slice, tgt_level, c.id, data_key_column) for c in layout[tgt_level].values()])
+            
+            # bit of debugging
+            # debug_id=list(layout[tgt_level].values())[0].id
+            # print(type(debug_id))
+            # # print(mapping_slice[mapping_slice[tgt_level]==debug_id])
+            # print(data_on_select_table[data_on_select_table[data_key_column].isin(mapping_slice[mapping_slice[tgt_level]==debug_id][data_key_column])].index.to_list())
+
+            # for i in range(len(mapping)):
+            #     if len(mapping[i])>0:
+            #         print(mapping[i])
+            #         break
+
+            # append mapping data
+            draw_dict['mapping']=mapping
+        
         # print('Making tooltip text')
         # add text
         if annot_text is not None:
@@ -130,6 +171,8 @@ def CirclePlot(layout, layout_order=None,
                 draw_dict[annot_key]=hover_text
         # print('Drawing circles')
         circles=ColumnDataSource(data=draw_dict)
+        render_sources[tgt_level]=circles
+
         if fixed_point_size is None:
             renderers[tgt_level]=p.circle('x', 'y', radius='r', fill_color='colors', line_color='line_colors', source=circles, line_width='line_widths')
         else:
@@ -168,17 +211,81 @@ def CirclePlot(layout, layout_order=None,
 
     hover=HoverTool(tooltips=tooltips, renderers=list(renderers.values())[-1:])
     p.add_tools(hover)
+    tap_tool = TapTool(mode='replace')
+    p.add_tools(tap_tool)
+
+    # apply data table if available
+    data_table=None
+    data_on_select_source=None
+    table_view_source=None
+    if apply_data_table:
+        data_on_select_source=ColumnDataSource(data_on_select_table)
+        columns=[TableColumn(field=col, title=col) for col in data_on_select_table.columns]
+        table_view_source=ColumnDataSource(data=dict(zip(columns, []*len(columns))))
+        
+        data_table=DataTable(source=table_view_source, columns=columns, width=data_table_width, height=data_table_height, fit_columns=True)
 
     # selection for which tooltips to show
     dropdown=Select(title='Label level', options=levels, value=levels[-1])
-    # Callback function to update hover renderers
-    callback = CustomJS(args=dict(hover=hover, options=renderers), code="""
-        const value = cb_obj.value;
-        const renderer = options[value];
-        hover.renderers = [renderer];
-    """)
     
-    dropdown.js_on_change('value', callback)
+    # Callback function to update hover renderers
+    dropdown.js_on_change('value', CustomJS(args=dict(hover=hover, options=renderers), code="""
+        hover.renderers = [options[cb_obj.value]];
+                                            """))
+    
+    # dropdown.js_on_change('value', callback)
+
+    # callback function to update data table
+    callback = CustomJS(args=dict(dropdown=dropdown, sources=render_sources, 
+                                  full_data_table=data_on_select_source,
+                                  shown_table_source=table_view_source
+                                  ), code="""
+        const value = dropdown.value;
+        const source = sources[dropdown.value];
+        // clear unselected sources
+        for (const key in sources) {
+            if (key!=value) {
+                sources[key].selected.indices=[];
+            }
+        }
+        // only keep first selected index
+        //source.selected.indices=[source.selected.indices[0]];
+         
+        // check if data table can be updated
+        if ('mapping' in source.data && full_data_table!=null) {
+            if (source.selected.indices.length>0) {
+                const selected_index=source.selected.indices[0];
+                const mapping_ids=source.data.mapping[selected_index];
+
+                // update data table
+                const data_table=full_data_table.data;
+                const new_data={};
+                for (const key in data_table) {
+                    new_data[key]=[];
+                }
+                
+                for(const id of mapping_ids) {
+                    for (const key in data_table) {
+                        new_data[key].push(data_table[key][id]);
+                    }
+                }
+
+                // update table view
+                // put one extra row in table for debug to show clicked
+                // for (const key in data_table) {
+                    // new_data[key].push(data_table[key][mapping_ids[0]]);
+                   // new_data[key].push(source.data.mapping.length);
+                //}
+                shown_table_source.data=new_data;
+            }
+            else{
+                shown_table_source.data={};
+            }
+        }
+    """)
+
+    for render_source in render_sources.values():
+        render_source.selected.js_on_change('indices', callback)
     
     # Layout
     legends=[]
@@ -191,10 +298,35 @@ def CirclePlot(layout, layout_order=None,
         manual_plot_data['line_legend']=manual_data
         legends.append(legend)
 
-    layout=row(*([p] + legends + [dropdown]))
+    if apply_data_table:
+        row1=row(*([p] + legends+[dropdown]))
+        row2=row(data_table)
+        layout=column(row1, row2)
+    else:
+        layout=row(*([p] + legends + [dropdown]))
     show(layout)
 
     return layout, manual_plot_data
+
+def GetTableIndices(data_table, mapping_table, level, level_id, id_col):
+    '''
+    Get the indices of the data table that correspond to the selected id in the mapping table.
+
+    Arguments:
+    - data_table: pandas.DataFrame
+        data table
+    - mapping_table: pandas.DataFrame
+        mapping table
+    - level: str
+        level of the mapping table
+    - id_col: str
+        column name of the id in the mapping table
+
+    Returns:
+    - indices: list
+        list of indices in the data table
+    '''
+    return data_table[data_table[id_col].isin(mapping_table[mapping_table[level]==level_id][id_col])].index.to_list()
 
 def MakeLegend(annot_colors, p, outline=False, legend_width=200):
     legend_fig = figure(width=legend_width, height=p.height, toolbar_location=None, min_border=0, outline_line_color=None)
