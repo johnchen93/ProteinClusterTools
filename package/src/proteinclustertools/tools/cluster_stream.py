@@ -76,6 +76,10 @@ def ClusterChunk(chunk, chunk_id, cutoffs, id1_col, id2_col, score_col, out_dir,
         # make sure the directory exists
         if not os.path.exists(file_dir):
             os.makedirs(file_dir, exist_ok=True)
+        # skip if already done
+        if os.path.exists(f"{file_dir}/{chunk_id}.pkl"):
+            print(f"Chunk {chunk_id} cutoff {cutoff} already done. Skipping. Delete file to redo.")
+            continue
 
         # print(f"---cutoff: {cutoff}")
         chunk = chunk[(chunk[score_col] >= cutoff) | (chunk[id1_col] == chunk[id2_col])]
