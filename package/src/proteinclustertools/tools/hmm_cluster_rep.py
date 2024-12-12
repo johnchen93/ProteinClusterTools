@@ -82,11 +82,11 @@ def process_cluster(cluster_data):
 
 def ParseClusterLevel(cluster_file, level, fasta_file, target_clusters, zip_path, id_index=None, num_processes=None, id_map=None):
     '''
-    cluster_file: csv file with columns 'id' and potentially multiple 'levels'
+    cluster_file: csv file with columns 'id' and potentially multiple 'levels'. The 'level' column defines cluster membership. All ids and levels are treated as strings. 
     level: the level to use for clustering
     fasta_file: fasta file with sequences, expected to have the same headers as the 'id' column in cluster_file
                 - if using the cleaned fasta, ids will be in integers
-    target_clusters: list of clusters to analyze
+    target_clusters: list of clusters to analyze. Can be int or str. Ints are converted to str.
     zip_path: path to save the zip file
     id_index: index of the id in the fasta header assuming splitting on '|'
     num_processes: number of processes to use for parallelization, default uses all
@@ -96,13 +96,15 @@ def ParseClusterLevel(cluster_file, level, fasta_file, target_clusters, zip_path
     fa = ReadFasta(fasta_file, id_index)
 
     if type(cluster_file)==str:
-        df=pd.read_csv(cluster_file, dtype={'id':str})
+        df=pd.read_csv(cluster_file, dtype=str)
     else:
         df=cluster_file
 
+    target_clusters=[str(x) for x in target_clusters]
+    # print(df)
     # collect id and level columns and convert to dictionary, group by level
     clusters=df.groupby(level)['id'].apply(list).to_dict()
-    # print(clusters)
+    # print(len(clusters))
 
     if id_map is not None:
         if type(id_map)==str:
@@ -112,6 +114,7 @@ def ParseClusterLevel(cluster_file, level, fasta_file, target_clusters, zip_path
 
     # Prepare data for multiprocessing
     cluster_data_list = [(cluster, ids, fa, id_map, tempfile.mkdtemp()) for cluster, ids in clusters.items() if cluster in target_clusters]
+    # print(f'Processing {len(cluster_data_list)} clusters')
 
     # Run analysis on each cluster in parallel
     with Pool(processes=num_processes) as pool:
