@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ProteinClusterTools"
-version = "1.0.13"
+version = "1.0.14"
 authors = [
   { name="John Chen", email="jo.chn.93@gmail.com" },
   { name="Barnabas Gall", email="barnabas.gall@anu.edu.au"},
