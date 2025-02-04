@@ -32,8 +32,8 @@ def SaveStates(states, state_file):
 def PathToFile(directory, path):
     return os.path.join(directory, path)
 
-def LoadEmbeddings(directory, states, filter_path=None):
-    embeddings_file=PathToFile(directory, states['embeddings'])
+def LoadEmbeddings(directory, states, filter_path=None, custom_embeddings=None):
+    embeddings_file= custom_embeddings if custom_embeddings else PathToFile(directory, states['embeddings'])
     embeddings=pickle.load(open(embeddings_file, 'rb'))
     if filter_path:
         # read in filter as a set
@@ -82,6 +82,7 @@ hom.add_argument('-cluster_lines', type=int, help='Number of lines to read at on
 hom.add_argument('-f', '-filter', help='List of IDs to filter for. Can be used for mmseqs clustering, kmeans, and UMAP.')
 hom.add_argument('-RMC', '-redo_mmseqs_clustering', action='store_true', help='Redo steps for mmseqs clustering.')
 hom.add_argument('-cluster_jobs', type=int, help='Number of jobs to use for clustering', default=None)
+hom.add_argument('-edge_table', help='Path to user provided edge table for clustering. Needs to be a tab-separated file with \'target\'/\'query\' in columns 1 and 2, and the distance score in column 3 (header names do not matter)', default=None)
 
 # esm embedding
 emb=parser.add_argument_group('Vector embedding')
@@ -92,6 +93,7 @@ emb.add_argument('-t', '-tok_per_batch', type=int, help='Number of tokens per ba
 vec=parser.add_argument_group('Vector based methods')
 # general vector
 vec.add_argument('-KF', '-keep_features', type=int, help='Number of features to use in vector based methods.', default=30)
+vec.add_argument('-embeddings_dict', help='Path to user provided embeddings dictionary. Needs to be a pickle file with a dictionary of embeddings, where the keys are the sequence IDs and the values are the embeddings vectors (1D, already pooled).', default=None)
 # Kmeans clustering
 vec.add_argument('-KM', '-kmeans', action='store_true', help='Run kmeans clustering')
 vec.add_argument('-K', '-kmeans_clusters', nargs='+', type=int, help='Number of kmeans clusters. Also used for setting cluster count when flattening hierachical clusters.', default=[])
@@ -120,7 +122,9 @@ tok_per_batch=args.t # number of tokens per batch for embedding
 mmseqs_cluster=False or args.MC # cluster mmseqs results
 use_percentiles=False or args.P # use percentiles of mmseqs results to do clustering
 cluster_cutoffs=args.cc # cutoffs for clustering
+custom_edge_table=args.edge_table # path to user provided edge table for clustering
 
+custom_embeddings=args.embeddings_dict # path to user provided embeddings dictionary
 run_kmeans=False or args.KM # run kmeans clustering
 kmeans_clusters=args.K # number of kmeans clusters
 keep_features=args.KF # number of features to use in kmeans clustering
@@ -200,7 +204,7 @@ if mmseqs_cluster:
     SaveStates(states, state_file)
 
     # cluster the mmseqs results in chunks
-    edge_table_path=PathToFile(out_directory, states['mmseqs_result'])
+    edge_table_path= custom_edge_table if custom_edge_table else PathToFile(out_directory, states['mmseqs_result'])
     cluster_path=os.path.join(out_directory, 'mmseqs_clustering/')
     if not os.path.exists(cluster_path):
         os.makedirs(cluster_path)
@@ -258,7 +262,7 @@ if run_kmeans:
     # os.makedirs(kmeans_path, exist_ok=True)
 
     print('Loading embeddings for kmeans')
-    ids, embeddings=LoadEmbeddings(out_directory, states, args.f)
+    ids, embeddings=LoadEmbeddings(out_directory, states, args.f, custom_embeddings)
 
     # get length of 1st vector
     embeddings=ReduceVectors(embeddings, keep_features)
@@ -331,7 +335,7 @@ if flatten_kmeans:
 if run_umap:
     # load vector embeddings
     print('Loading embeddings for UMAP')
-    ids, embeddings=LoadEmbeddings(out_directory, states, args.f)
+    ids, embeddings=LoadEmbeddings(out_directory, states, args.f, custom_embeddings)
 
     embeddings=ReduceVectors(embeddings, keep_features)
     
@@ -353,7 +357,7 @@ if run_umap:
 
 if run_hierarchical_clustering:
    
-    ids, embeddings=LoadEmbeddings(out_directory, states, args.f)
+    ids, embeddings=LoadEmbeddings(out_directory, states, args.f, custom_embeddings)
 
     embeddings=ReduceVectors(embeddings, keep_features)
 
