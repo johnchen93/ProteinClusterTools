@@ -1,7 +1,7 @@
 # Protein Cluster Tools
 By John Chen and Barnabas Gall.
 
-A pipeline for analyzing protein families as clusters of related sequences. Paper at: https://doi.org/10.1101/2024.11.13.623527
+A pipeline for analyzing protein families as clusters of related sequences. Paper at: https://doi.org/10.1093/molbev/msaf136
 
 Package available on [PyPI](https://pypi.org/project/ProteinClusterTools/).
 

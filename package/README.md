@@ -1,5 +1,9 @@
 # Protein Cluster Tools
-By John Chen and Barnabas Gall. Usage examples on [GitHub](https://github.com/johnchen93/ProteinClusterTools).
+By John Chen and Barnabas Gall. 
+
+Paper at: https://doi.org/10.1093/molbev/msaf136
+
+Usage examples on [GitHub](https://github.com/johnchen93/ProteinClusterTools).
 
 A pipeline for analyzing protein families as clusters of related sequences.
 
