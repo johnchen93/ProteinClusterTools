@@ -50,7 +50,7 @@ from sklearn.base import _fit_context
 from sklearn.utils._openmp_helpers import _openmp_effective_n_threads
 # from sklearn.utils._param_validation import Integral, Interval, StrOptions
 from sklearn.utils.extmath import row_norms
-from sklearn.utils.validation import _check_sample_weight, check_is_fitted, check_random_state
+from sklearn.utils.validation import _check_sample_weight, check_is_fitted, check_random_state, validate_data
 from sklearn.cluster._k_means_common import _inertia_dense, _inertia_sparse
 from sklearn.cluster._kmeans import (
     _BaseKMeans,
@@ -70,7 +70,8 @@ class BisectingKMeansKeepTree(BisectingKMeans):
     @_fit_context(prefer_skip_nested_validation=True)
     def fit(self, X, y=None, sample_weight=None):
         """Only change is to not erase the tree labels"""
-        X = self._validate_data(
+        X = validate_data(
+            self,
             X,
             accept_sparse="csr",
             dtype=[np.float64, np.float32],
