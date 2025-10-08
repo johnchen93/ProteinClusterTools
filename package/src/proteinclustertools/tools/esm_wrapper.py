@@ -4,7 +4,7 @@ from .esm_extract import create_parser, run
 import torch
 from Bio import SeqIO
 
-def Embed(fasta, out_dir='', prefix='', tmp_dir='tmp/esm/', tok_per_batch=30000, cont_run=False):
+def Embed(fasta, out_dir='', prefix='', tmp_dir='tmp/esm/', tok_per_batch=30000, cont_run=False, trunc_len=10000):
 
     # clear tmp_dir if it already exists
     if os.path.exists(tmp_dir) and not cont_run:
@@ -28,7 +28,7 @@ def Embed(fasta, out_dir='', prefix='', tmp_dir='tmp/esm/', tok_per_batch=30000,
     else:
         fasta_in=fasta
 
-    args_str=['esm1b_t33_650M_UR50S', fasta_in, tmp_dir, '--toks_per_batch' , str(tok_per_batch), '--include', "mean"]
+    args_str=['esm1b_t33_650M_UR50S', fasta_in, tmp_dir, '--toks_per_batch' , str(tok_per_batch), '--include', "mean", "--truncation_seq_length", str(trunc_len)]
     parser=create_parser()
     args=parser.parse_args(args_str)
     run(args)

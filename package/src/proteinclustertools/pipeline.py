@@ -89,6 +89,7 @@ emb=parser.add_argument_group('Vector embedding')
 emb.add_argument('-E','-embed_vectors', action='store_true', help='Embed vectors')
 emb.add_argument('-CE','-continue_embed', action='store_true', help='Continue embedding vectors, in case of interrupted run.')
 emb.add_argument('-t', '-tok_per_batch', type=int, help='Number of tokens per batch for embedding. Reduce if running out of memory.', default=30_000)
+emb.add_argument('-trunc_len', type=int, help='Truncate sequences longer than this length.', default=10_000)
 
 vec=parser.add_argument_group('Vector based methods')
 # general vector
@@ -118,6 +119,7 @@ all_by_all=False or args.A # run mmseqs all-by-all search
 embed_vectors=False or args.E # embed vectors
 continue_embed=False or args.CE # continue embedding vectors, use if previous run was somehow interrupted
 tok_per_batch=args.t # number of tokens per batch for embedding
+trunc_len=args.trunc_len # truncate sequences longer than this length
 
 mmseqs_cluster=False or args.MC # cluster mmseqs results
 use_percentiles=False or args.P # use percentiles of mmseqs results to do clustering
@@ -250,7 +252,7 @@ if mmseqs_cluster:
         shutil.rmtree(folder_path)
 
 if embed_vectors:
-    embed_out=Embed(cleaned_fasta, out_directory, out_prefix, tok_per_batch=tok_per_batch, cont_run=continue_embed) # change tok_per_batch lower if you run out of GPU memory
+    embed_out=Embed(cleaned_fasta, out_directory, out_prefix, tok_per_batch=tok_per_batch, cont_run=continue_embed, trunc_len=trunc_len) # change tok_per_batch lower if you run out of GPU memory
 
     print('Updates to state:', embed_out)
     states.update(embed_out)
