@@ -96,7 +96,7 @@ def ITOLProportionDataset(annot_table, color_annot, other_color='#bdbdbd', datat
     
     # go through the data set and 
     color_dict=color_annot['categories']
-    label = f'{color_annot['value']}_{color_annot['method']}'.capitalize()
+    label = f"{color_annot['value']}_{color_annot['method']}".capitalize()
     main_colors, main_labels = list(color_dict.values()), list(color_dict.keys())
     field_colors, field_labels = main_colors + [other_color], main_labels + ['Other']
     # more dataset specific 

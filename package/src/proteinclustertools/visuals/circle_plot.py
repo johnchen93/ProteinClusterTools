@@ -154,8 +154,8 @@ def CirclePlot(layout, layout_order=None,
         # add text
         if annot_text is not None:
             for annot in annot_text:
-                annot_label=f'{annot['value']} {annot['method']}'.capitalize()
-                annot_key=f'{annot['value']}_{annot['method']}'
+                annot_label=f"{annot['value']} {annot['method']}".capitalize()
+                annot_key=f"{annot['value']}_{annot['method']}"
                 annot_tooltip=(annot_label, f'@{annot_key}{{safe}}')
                 if annot_tooltip not in annot_hover:
                     annot_hover.append(annot_tooltip)
@@ -446,7 +446,7 @@ def ExportFigure(layout, plot_data, size=5, legend_padding=1, as_scatter=False, 
     width_ratios=[3]+[legend_padding]*legends_expected
     size_extra=size * sum(width_ratios[1:])/width_ratios[0] if legends_expected>0 else 0
     f, axes = plt.subplots( 1, 1+legends_expected, figsize=(size+size_extra, size), gridspec_kw={'width_ratios': width_ratios})
-    ax=axes[0]
+    ax=axes[0] if legends_expected > 0 else axes
     ax.axis('off')
     ax.set_xlim(xmin, xmax)
     ax.set_ylim(ymin, ymax)
